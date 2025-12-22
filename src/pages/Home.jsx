@@ -76,7 +76,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden">
       {/* HERO SECTION */}
-      <section id="inicio" ref={heroSectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden px-2">
+      <section id="inicio" ref={heroSectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden px-2 pt-16">
         <div ref={parallaxBgRef} className="absolute inset-0 bg-cover bg-center" style={{backgroundImage: 'url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80")'}}>
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-gray-900/40"></div>
         </div>
