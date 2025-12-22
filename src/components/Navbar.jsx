@@ -1,9 +1,13 @@
 // components/Navbar.jsx
 import React, { useState, useEffect, useRef } from 'react';
+import LoginModal from '../modals/LoginModal';
+import RegisterModal from '../modals/RegisterModal';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const navbarRef = useRef(null);
 
   // Controlar el scroll para cambiar el estilo
@@ -58,6 +62,48 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
+  // Controlar el scroll cuando los modales están abiertos
+  useEffect(() => {
+    if (isLoginOpen || isRegisterOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isLoginOpen, isRegisterOpen]);
+
+  // Funciones para abrir/cerrar modales
+  const openLoginModal = () => {
+    setIsLoginOpen(true);
+    setIsMenuOpen(false);
+  };
+
+  const openRegisterModal = () => {
+    setIsRegisterOpen(true);
+    setIsMenuOpen(false);
+  };
+
+  const closeLoginModal = () => {
+    setIsLoginOpen(false);
+  };
+
+  const closeRegisterModal = () => {
+    setIsRegisterOpen(false);
+  };
+
+  const switchToLogin = () => {
+    setIsRegisterOpen(false);
+    setTimeout(() => setIsLoginOpen(true), 300);
+  };
+
+  const switchToRegister = () => {
+    setIsLoginOpen(false);
+    setTimeout(() => setIsRegisterOpen(true), 300);
+  };
+
   const menuItems = ['Inicio', 'Servicios', 'Horarios', 'Planes', 'Ubicación'];
 
   return (
@@ -99,10 +145,16 @@ const Navbar = () => {
 
             {/* Botones desktop */}
             <div className="hidden md:flex space-x-3 lg:space-x-4">
-              <button className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition duration-300 font-medium text-sm lg:text-base">
+              <button 
+                onClick={openLoginModal}
+                className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition duration-300 font-medium text-sm lg:text-base"
+              >
                 Iniciar Sesión
               </button>
-              <button className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold hover:from-red-600 hover:to-orange-600 transition duration-300 shadow-lg text-sm lg:text-base relative overflow-hidden group">
+              <button 
+                onClick={openRegisterModal}
+                className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold hover:from-red-600 hover:to-orange-600 transition duration-300 shadow-lg text-sm lg:text-base relative overflow-hidden group"
+              >
                 <span className="relative z-10">Registrarse</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
               </button>
@@ -111,7 +163,10 @@ const Navbar = () => {
             {/* Botón hamburguesa para móvil */}
             <div className="md:hidden flex items-center space-x-4">
               {/* Botón Registrarse en móvil */}
-              <button className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold hover:from-red-600 hover:to-orange-600 transition duration-300 shadow text-sm relative overflow-hidden group">
+              <button 
+                onClick={openRegisterModal}
+                className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold hover:from-red-600 hover:to-orange-600 transition duration-300 shadow text-sm relative overflow-hidden group"
+              >
                 <span className="relative z-10">Regístrate</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
               </button>
@@ -180,10 +235,7 @@ const Navbar = () => {
               
               <button 
                 className="value text-sm"
-                onClick={() => {
-                  handleLinkClick();
-                  // Aquí podrías abrir un modal de inicio de sesión
-                }}
+                onClick={openLoginModal}
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -194,10 +246,7 @@ const Navbar = () => {
               
               <button 
                 className="value text-sm"
-                onClick={() => {
-                  handleLinkClick();
-                  // Aquí podrías abrir un modal de registro
-                }}
+                onClick={openRegisterModal}
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H6C4.93913 15 3.92172 15.4214 3.17157 16.1716C2.42143 16.9217 2 17.9391 2 19V21" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -231,6 +280,18 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Modales */}
+      <LoginModal 
+        isOpen={isLoginOpen} 
+        onClose={closeLoginModal}
+      />
+      
+      <RegisterModal 
+        isOpen={isRegisterOpen} 
+        onClose={closeRegisterModal}
+        onSwitchToLogin={switchToLogin}
+      />
 
       {/* Estilos CSS para las animaciones */}
       <style jsx>{`
