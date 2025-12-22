@@ -15,54 +15,54 @@ export const initHeroAnimations = (refs) => {
     parallaxBgRef
   } = refs;
 
-  // Efecto parallax para el fondo
+  // Efecto parallax para el fondo (más rápido)
   gsap.to(parallaxBgRef.current, {
-    yPercent: 30,
+    yPercent: 20, // Reducido de 30
     ease: "none",
     scrollTrigger: {
       trigger: heroSectionRef.current,
       start: "top top",
       end: "bottom top",
-      scrub: 1.5
+      scrub: 0.8 // Reducido de 1.5
     }
   });
 
-  // Animación de entrada para el hero
+  // Animación de entrada para el hero (más rápido)
   gsap.fromTo([heroTitleRef.current, heroSubtitleRef.current], 
-    { y: 80, opacity: 0 },
+    { y: 60, opacity: 0 }, // Reducido de 80
     {
       y: 0,
       opacity: 1,
-      duration: 1.5,
-      stagger: 0.4,
-      ease: "power3.out",
-      delay: 0.3
+      duration: 0.9, // Reducido de 1.5
+      stagger: 0.2,  // Reducido de 0.4
+      ease: "power2.out", // Cambiado a power2 para ser más rápido
+      delay: 0.1     // Reducido de 0.3
     }
   );
 
-  // Animación para botones
+  // Animación para botones (más rápido)
   gsap.fromTo(heroButtonsRef.current.children,
-    { y: 50, opacity: 0, scale: 0.8 },
+    { y: 30, opacity: 0, scale: 0.9 }, // Reducido de 50
     {
       y: 0,
       opacity: 1,
       scale: 1,
-      duration: 1,
-      delay: 1,
-      stagger: 0.3,
-      ease: "back.out(1.7)"
+      duration: 0.7, // Reducido de 1
+      delay: 0.5,    // Reducido de 1
+      stagger: 0.2,  // Reducido de 0.3
+      ease: "back.out(1.4)" // Reducido de 1.7
     }
   );
 
-  // Animación escalonada para estadísticas
+  // Animación escalonada para estadísticas (más rápido)
   gsap.fromTo(heroStatsRef.current.children,
-    { y: 60, opacity: 0 },
+    { y: 40, opacity: 0 }, // Reducido de 60
     {
       y: 0,
       opacity: 1,
-      duration: 1.2,
-      delay: 1.5,
-      stagger: 0.2,
+      duration: 0.8, // Reducido de 1.2
+      delay: 0.8,    // Reducido de 1.5
+      stagger: 0.15, // Reducido de 0.2
       ease: "power2.out"
     }
   );
@@ -75,49 +75,49 @@ export const initServiciosAnimations = (refs) => {
     serviciosCardsRef
   } = refs;
 
-  // Título de servicios
+  // Título de servicios (más rápido)
   gsap.fromTo(serviciosTitleRef.current,
-    { y: 60, opacity: 0 },
+    { y: 40, opacity: 0 }, // Reducido de 60
     {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 0.8, // Reducido de 1
       scrollTrigger: {
         trigger: serviciosSectionRef.current,
-        start: "top 80%",
+        start: "top 85%", // Cambiado de 80%
         end: "top 60%",
-        scrub: 1,
+        scrub: 0.5, // Reducido de 1
         toggleActions: "play none none reverse"
       }
     }
   );
 
-  // Tarjetas de servicios
+  // Tarjetas de servicios (más rápido)
   serviciosCardsRef.current.forEach((card, index) => {
     if (!card) return;
     
     gsap.fromTo(card,
       {
-        y: 100,
+        y: 60, // Reducido de 100
         opacity: 0,
-        rotationY: -15,
-        scale: 0.9
+        rotationY: -8, // Reducido de -15
+        scale: 0.95 // Reducido de 0.9
       },
       {
         y: 0,
         opacity: 1,
         rotationY: 0,
         scale: 1,
-        duration: 1,
-        ease: "power3.out",
+        duration: 0.7, // Reducido de 1
+        ease: "power2.out", // Cambiado a power2
         scrollTrigger: {
           trigger: card,
-          start: "top 85%",
-          end: "top 50%",
+          start: "top 90%", // Cambiado de 85%
+          end: "top 60%",
           toggleActions: "play none none none",
           once: true
         },
-        delay: index * 0.15
+        delay: index * 0.1 // Reducido de 0.15
       }
     );
   });
@@ -131,40 +131,40 @@ export const initHorariosAnimations = (refs) => {
     horariosRightRef
   } = refs;
 
-  // Título de horarios
+  // Título de horarios (más rápido)
   gsap.fromTo(horariosTitleRef.current,
-    { y: 60, opacity: 0 },
+    { y: 40, opacity: 0 }, // Reducido de 60
     {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 0.8, // Reducido de 1
       scrollTrigger: {
         trigger: horariosSectionRef.current,
-        start: "top 80%",
+        start: "top 85%", // Cambiado de 80%
         end: "top 60%",
-        scrub: 1,
+        scrub: 0.5, // Reducido de 1
         toggleActions: "play none none reverse"
       }
     }
   );
 
-  // Contenedores de horarios
+  // Contenedores de horarios (más rápido)
   gsap.fromTo(horariosLeftRef.current,
     {
-      x: -80,
+      x: -50, // Reducido de -80
       opacity: 0,
-      rotationY: -10
+      rotationY: -5 // Reducido de -10
     },
     {
       x: 0,
       opacity: 1,
       rotationY: 0,
-      duration: 1.2,
-      ease: "power3.out",
+      duration: 0.8, // Reducido de 1.2
+      ease: "power2.out", // Cambiado a power2
       scrollTrigger: {
         trigger: horariosLeftRef.current,
-        start: "top 85%",
-        end: "top 50%",
+        start: "top 90%", // Cambiado de 85%
+        end: "top 60%",
         toggleActions: "play none none none",
         once: true
       }
@@ -173,24 +173,24 @@ export const initHorariosAnimations = (refs) => {
 
   gsap.fromTo(horariosRightRef.current,
     {
-      x: 80,
+      x: 50, // Reducido de 80
       opacity: 0,
-      rotationY: 10
+      rotationY: 5 // Reducido de 10
     },
     {
       x: 0,
       opacity: 1,
       rotationY: 0,
-      duration: 1.2,
-      ease: "power3.out",
+      duration: 0.8, // Reducido de 1.2
+      ease: "power2.out", // Cambiado a power2
       scrollTrigger: {
         trigger: horariosRightRef.current,
-        start: "top 85%",
-        end: "top 50%",
+        start: "top 90%", // Cambiado de 85%
+        end: "top 60%",
         toggleActions: "play none none none",
         once: true
       },
-      delay: 0.3
+      delay: 0.2 // Reducido de 0.3
     }
   );
 };
@@ -202,57 +202,57 @@ export const initPlanesAnimations = (refs) => {
     planesCardsRef
   } = refs;
 
-  // Título de planes
+  // Título de planes (más rápido)
   gsap.fromTo(planesTitleRef.current,
-    { y: 60, opacity: 0 },
+    { y: 40, opacity: 0 }, // Reducido de 60
     {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 0.8, // Reducido de 1
       scrollTrigger: {
         trigger: planesSectionRef.current,
-        start: "top 80%",
+        start: "top 85%", // Cambiado de 80%
         end: "top 60%",
-        scrub: 1,
+        scrub: 0.5, // Reducido de 1
         toggleActions: "play none none reverse"
       }
     }
   );
 
-  // Tarjetas de planes
+  // Tarjetas de planes (más rápido)
   planesCardsRef.current.forEach((card, index) => {
     if (!card) return;
     
     gsap.fromTo(card,
       {
-        y: 120,
+        y: 80, // Reducido de 120
         opacity: 0,
-        scale: 0.85,
-        rotationX: 10
+        scale: 0.92, // Aumentado de 0.85
+        rotationX: 5 // Reducido de 10
       },
       {
         y: 0,
         opacity: 1,
         scale: 1,
         rotationX: 0,
-        duration: 1.3,
-        ease: "power3.out",
+        duration: 0.9, // Reducido de 1.3
+        ease: "power2.out", // Cambiado a power2
         scrollTrigger: {
           trigger: card,
-          start: "top 90%",
+          start: "top 95%", // Cambiado de 90%
           end: "top 60%",
           toggleActions: "play none none none",
           once: true
         },
-        delay: index * 0.2
+        delay: index * 0.15 // Reducido de 0.2
       }
     );
 
-    // Efecto hover
+    // Efecto hover (más rápido)
     card.addEventListener('mouseenter', () => {
       gsap.to(card, {
-        y: -10,
-        duration: 0.4,
+        y: -8, // Reducido de -10
+        duration: 0.3, // Reducido de 0.4
         ease: "power2.out"
       });
     });
@@ -260,7 +260,7 @@ export const initPlanesAnimations = (refs) => {
     card.addEventListener('mouseleave', () => {
       gsap.to(card, {
         y: 0,
-        duration: 0.4,
+        duration: 0.3, // Reducido de 0.4
         ease: "power2.out"
       });
     });
@@ -275,98 +275,98 @@ export const initUbicacionAnimations = (refs) => {
     ubicacionRightRef
   } = refs;
 
-  // Título de ubicación
+  // Título de ubicación (más rápido)
   gsap.fromTo(ubicacionTitleRef.current,
-    { y: 60, opacity: 0 },
+    { y: 40, opacity: 0 }, // Reducido de 60
     {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 0.8, // Reducido de 1
       scrollTrigger: {
         trigger: ubicacionSectionRef.current,
-        start: "top 80%",
+        start: "top 85%", // Cambiado de 80%
         end: "top 60%",
-        scrub: 1,
+        scrub: 0.5, // Reducido de 1
         toggleActions: "play none none reverse"
       }
     }
   );
 
-  // Sección izquierda
+  // Sección izquierda (más rápido)
   gsap.fromTo(ubicacionLeftRef.current,
     {
-      x: -60,
+      x: -40, // Reducido de -60
       opacity: 0,
-      scale: 0.95
+      scale: 0.97 // Aumentado de 0.95
     },
     {
       x: 0,
       opacity: 1,
       scale: 1,
-      duration: 1.2,
-      ease: "power3.out",
+      duration: 0.8, // Reducido de 1.2
+      ease: "power2.out", // Cambiado a power2
       scrollTrigger: {
         trigger: ubicacionLeftRef.current,
-        start: "top 85%",
-        end: "top 50%",
+        start: "top 90%", // Cambiado de 85%
+        end: "top 60%",
         toggleActions: "play none none none",
         once: true
       }
     }
   );
 
-  // Sección derecha (mapa)
+  // Sección derecha (mapa) (más rápido)
   gsap.fromTo(ubicacionRightRef.current,
     {
-      x: 60,
+      x: 40, // Reducido de 60
       opacity: 0,
-      scale: 0.95
+      scale: 0.97 // Aumentado de 0.95
     },
     {
       x: 0,
       opacity: 1,
       scale: 1,
-      duration: 1.2,
-      ease: "power3.out",
+      duration: 0.8, // Reducido de 1.2
+      ease: "power2.out", // Cambiado a power2
       scrollTrigger: {
         trigger: ubicacionRightRef.current,
-        start: "top 85%",
-        end: "top 50%",
+        start: "top 90%", // Cambiado de 85%
+        end: "top 60%",
         toggleActions: "play none none none",
         once: true
       },
-      delay: 0.4
+      delay: 0.25 // Reducido de 0.4
     }
   );
 };
 
 export const initGlobalAnimations = () => {
-  // Animación para todos los títulos de sección
+  // Animación para todos los títulos de sección (más rápido)
   const sectionTitles = document.querySelectorAll('h2');
   sectionTitles.forEach((title, index) => {
     gsap.fromTo(title,
-      { y: 50, opacity: 0 },
+      { y: 30, opacity: 0 }, // Reducido de 50
       {
         y: 0,
         opacity: 1,
-        duration: 1,
+        duration: 0.7, // Reducido de 1
         scrollTrigger: {
           trigger: title,
-          start: "top 85%",
-          end: "top 60%",
+          start: "top 90%", // Cambiado de 85%
+          end: "top 65%", // Cambiado de 60%
           toggleActions: "play none none reverse"
         },
-        delay: index * 0.1
+        delay: index * 0.05 // Reducido de 0.1
       }
     );
   });
 
-  // Efecto flotante para íconos de servicios
+  // Efecto flotante para íconos de servicios (más rápido)
   const serviceIcons = document.querySelectorAll('.service-icon');
   serviceIcons.forEach((icon) => {
     gsap.to(icon, {
-      y: -10,
-      duration: 2,
+      y: -6, // Reducido de -10
+      duration: 1.5, // Reducido de 2
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut"
