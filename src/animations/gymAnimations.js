@@ -12,7 +12,8 @@ export const initHeroAnimations = (refs) => {
     heroSubtitleRef,
     heroButtonsRef,
     heroStatsRef,
-    parallaxBgRef
+    parallaxBgRef,
+    statNumberRefs,
   } = refs;
 
   // Efecto parallax para el fondo (más rápido)
@@ -27,45 +28,133 @@ export const initHeroAnimations = (refs) => {
     }
   });
 
-  // Animación de entrada para el hero (más rápido)
-  gsap.fromTo([heroTitleRef.current, heroSubtitleRef.current], 
-    { y: 60, opacity: 0 }, // Reducido de 80
+  const titleWords = document.querySelectorAll('.title-word');
+  
+  // Animación escalonada para cada palabra
+  gsap.fromTo(titleWords,
+    {
+      y: -100,  // Empieza desde arriba
+      opacity: 0,
+      rotationX: -90,  // Efecto de giro 3D
+      scale: 0.5
+    },
     {
       y: 0,
       opacity: 1,
-      duration: 0.9, // Reducido de 1.5
-      stagger: 0.2,  // Reducido de 0.4
-      ease: "power2.out", // Cambiado a power2 para ser más rápido
-      delay: 0.1     // Reducido de 0.3
+      rotationX: 0,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.15,  // Retraso entre cada palabra
+      ease: "back.out(1.7)",
+      delay: 0.3
     }
   );
 
-  // Animación para botones (más rápido)
-  gsap.fromTo(heroButtonsRef.current.children,
-    { y: 30, opacity: 0, scale: 0.9 }, // Reducido de 50
+  // 3. Subtítulo (aparece después de las palabras)
+  gsap.fromTo(heroSubtitleRef.current,
+    { 
+      y: 40, 
+      opacity: 0,
+      scale: 0.95
+    },
     {
       y: 0,
       opacity: 1,
       scale: 1,
-      duration: 0.7, // Reducido de 1
-      delay: 0.5,    // Reducido de 1
-      stagger: 0.2,  // Reducido de 0.3
-      ease: "back.out(1.4)" // Reducido de 1.7
-    }
-  );
-
-  // Animación escalonada para estadísticas (más rápido)
-  gsap.fromTo(heroStatsRef.current.children,
-    { y: 40, opacity: 0 }, // Reducido de 60
-    {
-      y: 0,
-      opacity: 1,
-      duration: 0.8, // Reducido de 1.2
-      delay: 0.8,    // Reducido de 1.5
-      stagger: 0.15, // Reducido de 0.2
+      duration: 0.7,
+      delay: 0.9,  // Espera a que terminen las palabras
       ease: "power2.out"
     }
   );
+
+  // 4. Botones
+  gsap.fromTo(heroButtonsRef.current.children,
+    { 
+      y: 30, 
+      opacity: 0, 
+      scale: 0.9 
+    },
+    {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 0.7,
+      delay: 1.2,  // Espera al subtítulo
+      stagger: 0.2,
+      ease: "back.out(1.4)"
+    }
+  );
+
+  // 5. ANIMACIÓN DE NÚMEROS INCREMENTANDO
+  const statsData = [
+    { target: 1500, suffix: '+' },
+    { target: 25, suffix: '+' },
+    { target: 50, suffix: '+' },
+    { target: 5, suffix: '' }
+  ];
+
+  statNumberRefs.current.forEach((numberElement, index) => {
+    if (!numberElement) return;
+    
+    const stat = statsData[index];
+    let startValue = 0;
+    const endValue = stat.target;
+    const duration = 2; // Duración en segundos
+    
+    // Animación del contador
+    const counter = { value: startValue };
+    
+    gsap.to(counter, {
+      value: endValue,
+      duration: duration,
+      delay: 1.5 + (index * 0.3), // Retraso escalonado
+      ease: "power2.out",
+      onUpdate: () => {
+        if (numberElement) {
+          // Formatear el número (sin decimales)
+          const displayValue = Math.floor(counter.value);
+          numberElement.textContent = `${displayValue}${stat.suffix}`;
+        }
+      },
+      onStart: () => {
+        // Agregar clase para efecto visual durante el conteo
+        if (numberElement) {
+          numberElement.classList.add('counting');
+        }
+      },
+      onComplete: () => {
+        // Remover clase cuando termina
+        if (numberElement) {
+          numberElement.classList.remove('counting');
+          // Efecto final cuando termina el conteo
+          gsap.to(numberElement, {
+            scale: 1.1,
+            duration: 0.2,
+            yoyo: true,
+            repeat: 1,
+            ease: "power2.out"
+          });
+        }
+      }
+    });
+
+    // También animar la entrada del contenedor de estadísticas
+    gsap.fromTo(numberElement.parentElement,
+      { 
+        y: 40, 
+        opacity: 0,
+        scale: 0.9
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        delay: 1.4 + (index * 0.2), // Un poco antes que empiece el conteo
+        ease: "power2.out"
+      }
+    );
+  });
 };
 
 export const initServiciosAnimations = (refs) => {
