@@ -450,30 +450,23 @@ const Home = () => {
               </div>
             </div>
 
-            <div ref={ubicacionRightRef} className="opacity-0 mt-8 lg:mt-0">
-              <div className="bg-gray-800/30 rounded-xl sm:rounded-2xl overflow-hidden border border-gray-700 h-full">
-                <div className="h-[300px] sm:h-[400px] md:min-h-[500px] relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4">
-                    <div className="text-center p-4 sm:p-6 md:p-8">
-                      <div className="text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-6">
-                        🏋️‍♂️
-                      </div>
-                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4">
-                        IRON GYM - SEDE CENTRAL
-                      </h3>
-                      <div className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base mb-6 sm:mb-8">
-                        <p>📍 Av. Fitness #789, Ciudad Deportiva</p>
-                        <p>🚗 Estacionamiento gratuito</p>
-                        <p>🚇 Metro: Estación Olympia (Línea 3)</p>
-                      </div>
-                      <button className="px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-3 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-lg sm:rounded-xl hover:from-red-600 hover:to-orange-600 transition duration-300 font-semibold shadow-lg text-sm sm:text-base">
-                        Abrir en Google Maps
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div ref={ubicacionRightRef} className="opacity-0 mt-8 lg:mt-0">
+  <div className="bg-gray-800/30 rounded-xl sm:rounded-2xl overflow-hidden border border-gray-700 h-full">
+    <div className="h-[300px] sm:h-[400px] md:min-h-[500px] relative">
+      
+      {/* MAPA REAL */}
+      <iframe
+        title="Ubicación Iron Gym"
+        src="https://www.google.com/maps?q=Calle+72+Carrera+70-35,+Bogotá,+Colombia&output=embed"
+        className="w-full h-full border-0"
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+
+    </div>
+  </div>
+</div>
+
           </div>
         </div>
       </section>
