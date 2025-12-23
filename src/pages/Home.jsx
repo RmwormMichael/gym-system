@@ -450,23 +450,20 @@ const Home = () => {
               </div>
             </div>
 
-<div ref={ubicacionRightRef} className="opacity-0 mt-8 lg:mt-0">
-  <div className="bg-gray-800/30 rounded-xl sm:rounded-2xl overflow-hidden border border-gray-700 h-full">
-    <div className="h-[300px] sm:h-[400px] md:min-h-[500px] relative">
-      
-      {/* MAPA REAL */}
-      <iframe
-        title="Ubicación Iron Gym"
-        src="https://www.google.com/maps?q=Calle+72+Carrera+70-35,+Bogotá,+Colombia&output=embed"
-        className="w-full h-full border-0"
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-      />
-
-    </div>
-  </div>
-</div>
-
+            <div ref={ubicacionRightRef} className="opacity-0 mt-8 lg:mt-0">
+              <div className="bg-gray-800/30 rounded-xl sm:rounded-2xl overflow-hidden border border-gray-700 h-full">
+                <div className="h-[300px] sm:h-[400px] md:min-h-[500px] relative">
+                  {/* MAPA REAL */}
+                  <iframe
+                    title="Ubicación Iron Gym"
+                    src="https://www.google.com/maps?q=Calle+72+Carrera+70-35,+Bogotá,+Colombia&output=embed"
+                    className="w-full h-full border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
