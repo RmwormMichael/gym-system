@@ -4,6 +4,8 @@ import "./login.css";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+
 
 const LoginModal = ({ isOpen, onClose }) => {
   const { login } = useAuth();
@@ -24,9 +26,19 @@ const LoginModal = ({ isOpen, onClose }) => {
         password: formData.password,
       });
 
-      login(data.token); // 👈 ESTO es lo importante
+      login(data.token);
       onClose();
-      navigate("/perfil");
+
+      const decoded = jwtDecode(data.token);
+
+      // 🔥 REDIRECCIÓN POR ROL
+      if (decoded.rol === "ADMIN") {
+        navigate("/admin");
+      } else if (decoded.rol === "ENTRENADOR") {
+        navigate("/entrenador");
+      } else {
+        navigate("/perfil");
+      }
     } catch (error) {
       alert(error.response?.data?.msg || "Credenciales incorrectas");
     }

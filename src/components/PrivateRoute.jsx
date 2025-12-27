@@ -1,10 +1,9 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children, roles }) => {
   const { user, loading } = useAuth();
 
-  // Esperar a que el contexto termine de cargar
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white">
@@ -13,12 +12,18 @@ const PrivateRoute = ({ children }) => {
     );
   }
 
-  // Si no hay usuario → fuera
+  // No autenticado
   if (!user) {
     return <Navigate to="/" replace />;
   }
 
-  // Usuario válido → renderizar
+  // Rol no permitido
+  if (roles && !roles.includes(user.rol)) {
+    if (user.rol === "ADMIN") return <Navigate to="/admin" replace />;
+    if (user.rol === "ENTRENADOR") return <Navigate to="/entrenador" replace />;
+    return <Navigate to="/perfil" replace />;
+  }
+
   return children;
 };
 

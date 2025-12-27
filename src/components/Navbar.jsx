@@ -15,6 +15,16 @@ const Navbar = () => {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const navbarRef = useRef(null);
 
+  const roleMenus = {
+    ADMIN: [
+      { label: "Panel", path: "/admin" },
+    ],
+
+    ENTRENADOR: [{ label: "Panel", path: "/entrenador" }],
+
+    CLIENTE: [{ label: "Mi Perfil", path: "/perfil" }],
+  };
+
   // Controlar el scroll para cambiar el estilo
   useEffect(() => {
     const handleScroll = () => {
@@ -188,13 +198,17 @@ const Navbar = () => {
                     </span>
                   </span>
 
-                  {/* Ir al perfil */}
-                  <button
-                    onClick={() => navigate("/perfil")}
-                    className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition duration-300 font-medium text-sm lg:text-base"
-                  >
-                    Mi Perfil
-                  </button>
+                  {/* Accesos por rol */}
+                  {roleMenus[user.rol]?.map((item) => (
+                    <button
+                      key={item.path}
+                      onClick={() => navigate(item.path)}
+                      className="text-sm lg:text-base text-white hover:text-orange-400 transition duration-300 font-medium relative group"
+                    >
+                      {item.label}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                    </button>
+                  ))}
 
                   {/* Logout */}
                   <button
@@ -353,15 +367,18 @@ const Navbar = () => {
                     </span>
                   </div>
 
-                  <button
-                    className="value text-sm"
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      navigate("/perfil");
-                    }}
-                  >
-                    Mi Perfil
-                  </button>
+                  {roleMenus[user.rol]?.map((item) => (
+                    <button
+                      key={item.path}
+                      className="value text-sm"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        navigate(item.path);
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
 
                   <button
                     className="value text-sm text-red-400"
