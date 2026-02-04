@@ -1,3 +1,4 @@
+// components/modals/RegisterModal.jsx
 import React, { useState } from "react";
 import "./register.css";
 import api from "../api/axios";
@@ -200,7 +201,7 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
                 <input type="checkbox" required className="mr-2" />
                 <span className="text-sm text-gray-400">
                   Acepto los{" "}
-                  <a href="#" className="text-orange-400 hover:text-orange-300">
+                  <a href="#" className="text-[#00f2ea] hover:text-[#33f9f2] transition duration-300">
                     términos y condiciones
                   </a>
                 </span>
@@ -220,7 +221,7 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
                 ¿Ya tienes cuenta?{" "}
                 <button
                   type="button"
-                  className="text-orange-400 hover:text-orange-300 font-semibold"
+                  className="text-[#00f2ea] hover:text-[#33f9f2] font-semibold transition duration-300"
                   onClick={handleLoginClick}
                 >
                   Inicia sesión aquí

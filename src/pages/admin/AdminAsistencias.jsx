@@ -108,7 +108,7 @@ const AdminAsistencias = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] bg-clip-text text-transparent">
             Control de Asistencias
           </h1>
           <p className="text-gray-400 text-sm mt-1">
@@ -121,11 +121,11 @@ const AdminAsistencias = () => {
         {/* Columna 1: Control de asistencias */}
         <div className="glass-effect rounded-2xl p-5">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+            <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
               <span className="text-2xl">🎯</span>
             </div>
             <div>
-              <h2 className="text-xl font-bold text-orange-400">
+              <h2 className="text-xl font-bold text-[#00f2ea]">
                 Registrar Asistencia
               </h2>
               <p className="text-gray-400 text-sm">Control manual de acceso</p>
@@ -138,7 +138,7 @@ const AdminAsistencias = () => {
               Seleccionar usuario
             </label>
             <select
-              className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+              className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
               value={usuarioSeleccionado}
               onChange={(e) => {
                 setUsuarioSeleccionado(e.target.value);
@@ -179,10 +179,10 @@ const AdminAsistencias = () => {
           {ultimaAsistencia && (
             <div className="mb-6 p-4 bg-gradient-to-br from-gray-900/80 to-black/50 rounded-xl border border-gray-700/50">
               <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 bg-orange-500/20 rounded-lg">
-                  <span className="text-orange-400 text-lg">📅</span>
+                <div className="p-1.5 bg-[#00f2ea]/20 rounded-lg">
+                  <span className="text-[#00f2ea] text-lg">📅</span>
                 </div>
-                <h3 className="font-bold text-orange-400">Última asistencia</h3>
+                <h3 className="font-bold text-[#00f2ea]">Última asistencia</h3>
               </div>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between items-center py-2 border-b border-gray-800/50">
@@ -261,11 +261,11 @@ const AdminAsistencias = () => {
         <div className="lg:col-span-2 glass-effect rounded-2xl p-5">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+              <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
                 <span className="text-2xl">📋</span>
               </div>
               <div>
-                <h2 className="text-xl font-bold text-orange-400">
+                <h2 className="text-xl font-bold text-[#00f2ea]">
                   Historial de Asistencias
                 </h2>
                 <p className="text-gray-400 text-sm">
@@ -281,7 +281,7 @@ const AdminAsistencias = () => {
                   type="date"
                   value={filtroFecha}
                   onChange={(e) => setFiltroFecha(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 text-sm"
+                  className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 text-sm"
                 />
               </div>
               
@@ -289,7 +289,7 @@ const AdminAsistencias = () => {
                 <select
                   value={filtroUsuario}
                   onChange={(e) => setFiltroUsuario(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 text-sm appearance-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 text-sm appearance-none"
                 >
                   <option value="">Todos los usuarios</option>
                   {usuarios.map((u) => (
@@ -351,12 +351,12 @@ const AdminAsistencias = () => {
               {asistenciasFiltradas.map((a, index) => (
                 <div
                   key={a._id}
-                  className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-4 rounded-xl border border-gray-700/50 hover:border-orange-500/30 transition-all duration-300 hover:scale-[1.01]"
+                  className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-4 rounded-xl border border-gray-700/50 hover:border-[#00f2ea]/30 transition-all duration-300 hover:scale-[1.01]"
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-3">
-                        <span className="font-bold text-white group-hover:text-orange-300 transition-colors">
+                        <span className="font-bold text-white group-hover:text-[#00f2ea] transition-colors">
                           {a.usuario_id?.nombre || "Usuario eliminado"}
                         </span>
                         <span className="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded-full">

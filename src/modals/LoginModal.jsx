@@ -6,7 +6,6 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-
 const LoginModal = ({ isOpen, onClose }) => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -85,8 +84,6 @@ const LoginModal = ({ isOpen, onClose }) => {
                 </svg>
                 <span>IRON GYM ACCESS</span>
               </div>
-
-              {/* Quitamos los card-dots con los dos botones */}
             </div>
 
             <div className="card-body">
@@ -131,7 +128,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                 </label>
                 <a
                   href="#"
-                  className="text-sm text-orange-300 hover:text-orange-200"
+                  className="text-sm text-[#00f2ea] hover:text-[#00e0ff] transition duration-300"
                 >
                   ¿Olvidaste tu contraseña?
                 </a>
@@ -150,7 +147,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   ¿No tienes cuenta?{" "}
                   <button
                     type="button"
-                    className="text-orange-300 hover:text-orange-200 font-semibold"
+                    className="text-[#00f2ea] hover:text-[#00e0ff] font-semibold transition duration-300"
                     onClick={() => {
                       onClose();
                       // Aquí podrías abrir el modal de registro
@@ -163,7 +160,6 @@ const LoginModal = ({ isOpen, onClose }) => {
             </div>
           </form>
 
-          {/* Botón de cerrar con nuevos estilos */}
           <button
             onClick={onClose}
             className="close-btn"

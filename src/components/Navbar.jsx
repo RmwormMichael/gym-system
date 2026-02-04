@@ -1,3 +1,4 @@
+// Navbar.jsx
 import React, { useState, useEffect, useRef } from "react";
 import LoginModal from "../modals/LoginModal";
 import RegisterModal from "../modals/RegisterModal";
@@ -158,10 +159,10 @@ const Navbar = () => {
           <div className="flex justify-between items-center py-3">
             {/* Logo */}
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-[#00f2ea] to-[#00d9ff] rounded-full flex items-center justify-center">
                 <span className="font-bold text-base sm:text-lg">G</span>
               </div>
-              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00d9ff] bg-clip-text text-transparent">
                 IRON GYM
               </span>
             </div>
@@ -177,10 +178,10 @@ const Navbar = () => {
                   <button
                     key={item}
                     onClick={() => scrollToSection(id)}
-                    className="text-sm lg:text-base text-white hover:text-orange-400 transition duration-300 font-medium relative group"
+                    className="text-sm lg:text-base text-white hover:text-[#00f2ea] transition duration-300 font-medium relative group"
                   >
                     {item}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#00f2ea] transition-all duration-300 group-hover:w-full"></span>
                   </button>
                 );
               })}
@@ -193,7 +194,7 @@ const Navbar = () => {
                   {/* Nombre del usuario */}
                   <span className="text-sm lg:text-base text-gray-300">
                     Hola,{" "}
-                    <span className="text-orange-400 font-semibold">
+                    <span className="text-[#00f2ea] font-semibold">
                       {user.nombre}
                     </span>
                   </span>
@@ -203,10 +204,10 @@ const Navbar = () => {
                     <button
                       key={item.path}
                       onClick={() => navigate(item.path)}
-                      className="text-sm lg:text-base text-white hover:text-orange-400 transition duration-300 font-medium relative group"
+                      className="text-sm lg:text-base text-white hover:text-[#00f2ea] transition duration-300 font-medium relative group"
                     >
                       {item.label}
-                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#00f2ea] transition-all duration-300 group-hover:w-full"></span>
                     </button>
                   ))}
 
@@ -216,7 +217,7 @@ const Navbar = () => {
                       logout();
                       navigate("/");
                     }}
-                    className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition duration-300 font-medium text-sm lg:text-base"
+                    className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg bg-[#00f2ea] text-white hover:#00d9ff transition duration-300 font-medium text-sm lg:text-base"
                   >
                     Cerrar sesión
                   </button>
@@ -225,17 +226,17 @@ const Navbar = () => {
                 <>
                   <button
                     onClick={openLoginModal}
-                    className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition duration-300 font-medium text-sm lg:text-base"
+                    className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg border border-[#00f2ea] text-[#00f2ea] hover:bg-[#00f2ea] hover:text-white transition duration-300 font-medium text-sm lg:text-base"
                   >
                     Iniciar Sesión
                   </button>
 
                   <button
                     onClick={openRegisterModal}
-                    className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold hover:from-red-600 hover:to-orange-600 transition duration-300 shadow-lg text-sm lg:text-base relative overflow-hidden group"
+                    className="px-4 py-1.5 lg:px-6 lg:py-2 rounded-lg bg-gradient-to-r from-[#00f2ea] to-[#00d9ff] text-white font-semibold hover:from-[#00e5f2] hover:to-[#00c4ff] transition duration-300 shadow-lg text-sm lg:text-base relative overflow-hidden group"
                   >
                     <span className="relative z-10">Registrarse</span>
-                    <span className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-[#00c4ff] to-[#0099cc] translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
                   </button>
                 </>
               )}
@@ -247,7 +248,7 @@ const Navbar = () => {
               {!user && (
                 <button
                   onClick={openRegisterModal}
-                  className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold transition text-sm"
+                  className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-[#00f2ea] to-[#00d9ff] text-white font-semibold transition text-sm"
                 >
                   Regístrate
                 </button>
@@ -267,15 +268,15 @@ const Navbar = () => {
               >
                 <div
                   id="bar1"
-                  className="bars w-6 h-0.5 bg-orange-400 rounded-full transition-all duration-300"
+                  className="bars w-6 h-0.5 bg-[#00f2ea] rounded-full transition-all duration-300"
                 ></div>
                 <div
                   id="bar2"
-                  className="bars w-5 h-0.5 bg-orange-400 rounded-full transition-all duration-800"
+                  className="bars w-5 h-0.5 bg-[#00f2ea] rounded-full transition-all duration-800"
                 ></div>
                 <div
                   id="bar3"
-                  className="bars w-6 h-0.5 bg-orange-400 rounded-full transition-all duration-300"
+                  className="bars w-6 h-0.5 bg-[#00f2ea] rounded-full transition-all duration-300"
                 ></div>
               </label>
             </div>
@@ -324,21 +325,21 @@ const Navbar = () => {
                   >
                     <path
                       d="M12 2L2 7L12 12L22 7L12 2Z"
-                      stroke="#F97316"
+                      stroke="#00f2ea"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                     <path
                       d="M2 17L12 22L22 17"
-                      stroke="#F97316"
+                      stroke="#00f2ea"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                     <path
                       d="M2 12L12 17L22 12"
-                      stroke="#F97316"
+                      stroke="#00f2ea"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -362,7 +363,7 @@ const Navbar = () => {
                 <>
                   <div className="px-4 py-3 text-sm text-gray-300">
                     Hola,{" "}
-                    <span className="text-orange-400 font-semibold">
+                    <span className="text-[#00f2ea] font-semibold">
                       {user.nombre}
                     </span>
                   </div>
@@ -381,14 +382,14 @@ const Navbar = () => {
                   ))}
 
                   <button
-                    className="value text-sm text-red-400"
+                    className="value text-sm #00f2ea"
                     onClick={() => {
                       logout();
                       setIsMenuOpen(false);
                       navigate("/");
                     }}
                   >
-                    Cerrar sesión
+                    Cerrar sesión 
                   </button>
                 </>
               )}
@@ -396,7 +397,7 @@ const Navbar = () => {
 
             {/* Información adicional del gimnasio */}
             <div className="mt-8 mx-4 p-4 bg-gray-800/50 rounded-lg">
-              <h3 className="text-orange-400 font-semibold mb-3 text-sm">
+              <h3 className="text-[#00f2ea] font-semibold mb-3 text-sm">
                 CONTACTO RÁPIDO
               </h3>
               <div className="space-y-2">

@@ -13,6 +13,21 @@ const MisMediciones = () => {
   const statsRef = useRef([]);
   const chartRef = useRef(null);
 
+  // Función para formatear IMC a 2 decimales
+  const formatIMC = (imc) => {
+    if (imc === null || imc === undefined || imc === "") return "0.00";
+    const num = parseFloat(imc);
+    if (isNaN(num)) return "0.00";
+    return num.toFixed(2);
+  };
+
+  // Función para obtener valor numérico del IMC
+  const getNumIMC = (imc) => {
+    if (imc === null || imc === undefined || imc === "") return 0;
+    const num = parseFloat(imc);
+    return isNaN(num) ? 0 : num;
+  };
+
   const cargarMediciones = async () => {
     setLoading(true);
     try {
@@ -41,7 +56,7 @@ const MisMediciones = () => {
     if (mediciones.length === 0) return null;
 
     const pesos = mediciones.map(m => m.peso).filter(p => p);
-    const imcs = mediciones.map(m => parseFloat(m.imc)).filter(i => !isNaN(i));
+    const imcs = mediciones.map(m => getNumIMC(m.imc)).filter(i => !isNaN(i));
     
     const ultimaMedicion = mediciones[mediciones.length - 1];
     const primeraMedicion = mediciones[0];
@@ -61,27 +76,33 @@ const MisMediciones = () => {
 
   const estadisticas = calcularEstadisticas();
 
-  // Calcular clasificación IMC
+  // Calcular clasificación IMC (usa el valor numérico)
   const getClasificacionIMC = (imc) => {
-    if (imc < 18.5) return "Bajo peso";
-    if (imc < 25) return "Normal";
-    if (imc < 30) return "Sobrepeso";
+    const numImc = getNumIMC(imc);
+    if (numImc === 0) return "Sin datos";
+    if (numImc < 18.5) return "Bajo peso";
+    if (numImc < 25) return "Normal";
+    if (numImc < 30) return "Sobrepeso";
     return "Obesidad";
   };
 
-  // Obtener color según IMC
+  // Obtener color según IMC (usa el valor numérico)
   const getColorIMC = (imc) => {
-    if (imc < 18.5) return "text-blue-400";
-    if (imc < 25) return "text-green-400";
-    if (imc < 30) return "text-yellow-400";
+    const numImc = getNumIMC(imc);
+    if (numImc === 0) return "text-gray-400";
+    if (numImc < 18.5) return "text-blue-400";
+    if (numImc < 25) return "text-green-400";
+    if (numImc < 30) return "text-yellow-400";
     return "text-red-400";
   };
 
-  // Obtener color de fondo según IMC
+  // Obtener color de fondo según IMC (usa el valor numérico)
   const getBgColorIMC = (imc) => {
-    if (imc < 18.5) return "from-blue-900/20 to-blue-900/10";
-    if (imc < 25) return "from-green-900/20 to-emerald-900/10";
-    if (imc < 30) return "from-yellow-900/20 to-amber-900/10";
+    const numImc = getNumIMC(imc);
+    if (numImc === 0) return "from-gray-900/20 to-gray-900/10";
+    if (numImc < 18.5) return "from-blue-900/20 to-blue-900/10";
+    if (numImc < 25) return "from-green-900/20 to-emerald-900/10";
+    if (numImc < 30) return "from-yellow-900/20 to-amber-900/10";
     return "from-red-900/20 to-rose-900/10";
   };
 
@@ -99,7 +120,7 @@ const MisMediciones = () => {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-orange-500 mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#00f2ea] mb-4"></div>
           <p className="text-gray-400">Cargando mediciones...</p>
         </div>
       </div>
@@ -112,11 +133,11 @@ const MisMediciones = () => {
         {/* Header */}
         <div className="glass-effect rounded-2xl p-5 mb-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+            <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
               <span className="text-2xl">📊</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] bg-clip-text text-transparent">
                 Mis Mediciones
               </h1>
               <p className="text-gray-400 text-sm">
@@ -144,7 +165,7 @@ const MisMediciones = () => {
               },
               { 
                 label: "IMC actual", 
-                value: estadisticas.imcActual, 
+                value: formatIMC(estadisticas.imcActual),
                 color: getColorIMC(estadisticas.imcActual), 
                 icon: "📈", 
                 bg: getBgColorIMC(estadisticas.imcActual),
@@ -153,13 +174,13 @@ const MisMediciones = () => {
               { 
                 label: "Total mediciones", 
                 value: estadisticas.total, 
-                color: "text-orange-400", 
+                color: "text-[#00f2ea]", 
                 icon: "📋", 
-                bg: "from-orange-900/30 to-amber-900/10" 
+                bg: "from-[#00f2ea]/20 to-[#00b3ff]/10" 
               },
               { 
                 label: "IMC promedio", 
-                value: estadisticas.promedioIMC, 
+                value: formatIMC(estadisticas.promedioIMC),
                 color: "text-purple-400", 
                 icon: "📊", 
                 bg: "from-purple-900/30 to-violet-900/10" 
@@ -209,7 +230,7 @@ const MisMediciones = () => {
                     <div 
                       className={`w-full rounded-t-lg ${
                         index === mediciones.slice(-6).length - 1 
-                          ? 'bg-gradient-to-t from-orange-500 to-orange-600' 
+                          ? 'bg-gradient-to-t from-[#00f2ea] to-[#00b3ff]' 
                           : 'bg-gradient-to-t from-gray-700 to-gray-600'
                       }`}
                       style={{ height: `${altura}%` }}
@@ -239,7 +260,7 @@ const MisMediciones = () => {
               <div className="text-sm text-gray-400">
                 {mediciones.length > 0 && (
                   <>
-                    <span className="text-orange-400">Actual:</span> {mediciones[mediciones.length - 1].peso} kg
+                    <span className="text-[#00f2ea]">Actual:</span> {mediciones[mediciones.length - 1].peso} kg
                   </>
                 )}
               </div>
@@ -282,80 +303,88 @@ const MisMediciones = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              {mediciones.slice().reverse().map((m, index) => (
-                <div
-                  key={m._id}
-                  ref={(el) => (cardsRef.current[index] = el)}
-                  className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-5 rounded-xl border border-gray-700/50 hover:border-orange-500/30 transition-all duration-300 hover:scale-[1.01]"
-                >
-                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className={`p-2 rounded-lg ${getBgColorIMC(m.imc)}`}>
-                          <span className={`text-lg ${getColorIMC(m.imc)}`}>📅</span>
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-lg text-white group-hover:text-orange-300 transition-colors">
-                            {formatearFecha(m.fecha)}
-                          </h3>
-                          <p className="text-sm text-gray-400">
-                            {new Date(m.fecha).toLocaleTimeString([], {
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            })}
-                          </p>
+              {mediciones.slice().reverse().map((m, index) => {
+                const numImc = getNumIMC(m.imc);
+                const formattedIMC = formatIMC(m.imc);
+                const clasificacion = getClasificacionIMC(numImc);
+                const color = getColorIMC(numImc);
+                const bgColor = getBgColorIMC(numImc);
+                
+                return (
+                  <div
+                    key={m._id}
+                    ref={(el) => (cardsRef.current[index] = el)}
+                    className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-5 rounded-xl border border-gray-700/50 hover:border-[#00f2ea]/30 transition-all duration-300 hover:scale-[1.01]"
+                  >
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className={`p-2 rounded-lg ${bgColor}`}>
+                            <span className={`text-lg ${color}`}>📅</span>
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-lg text-white group-hover:text-[#00f2ea] transition-colors">
+                              {formatearFecha(m.fecha)}
+                            </h3>
+                            <p className="text-sm text-gray-400">
+                              {new Date(m.fecha).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </p>
+                          </div>
                         </div>
                       </div>
+                      
+                      <div className={`px-4 py-2 rounded-lg text-center ${bgColor}`}>
+                        <p className={`text-sm font-semibold ${color}`}>
+                          {clasificacion}
+                        </p>
+                      </div>
                     </div>
-                    
-                    <div className={`px-4 py-2 rounded-lg text-center ${getBgColorIMC(m.imc)}`}>
-                      <p className={`text-sm font-semibold ${getColorIMC(m.imc)}`}>
-                        {getClasificacionIMC(m.imc)}
-                      </p>
-                    </div>
-                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="text-center p-3 bg-gray-900/30 rounded-lg">
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <span className="text-blue-400">⚖️</span>
-                        <p className="text-xs text-gray-400">Peso</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="text-center p-3 bg-gray-900/30 rounded-lg">
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                          <span className="text-blue-400">⚖️</span>
+                          <p className="text-xs text-gray-400">Peso</p>
+                        </div>
+                        <p className="font-bold text-2xl text-blue-300">{m.peso} kg</p>
                       </div>
-                      <p className="font-bold text-2xl text-blue-300">{m.peso} kg</p>
-                    </div>
-                    
-                    <div className="text-center p-3 bg-gray-900/30 rounded-lg">
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <span className="text-purple-400">📏</span>
-                        <p className="text-xs text-gray-400">Altura</p>
+                      
+                      <div className="text-center p-3 bg-gray-900/30 rounded-lg">
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                          <span className="text-purple-400">📏</span>
+                          <p className="text-xs text-gray-400">Altura</p>
+                        </div>
+                        <p className="font-bold text-2xl text-purple-300">{m.altura} cm</p>
                       </div>
-                      <p className="font-bold text-2xl text-purple-300">{m.altura} cm</p>
-                    </div>
-                    
-                    <div className="text-center p-3 rounded-lg bg-gradient-to-br from-gray-900/50 to-black/30">
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <span className={`${getColorIMC(m.imc)}`}>📈</span>
-                        <p className="text-xs text-gray-400">IMC</p>
+                      
+                      <div className="text-center p-3 rounded-lg bg-gradient-to-br from-gray-900/50 to-black/30">
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                          <span className={`${color}`}>📈</span>
+                          <p className="text-xs text-gray-400">IMC</p>
+                        </div>
+                        <p className={`font-bold text-3xl ${color}`}>{formattedIMC}</p>
                       </div>
-                      <p className={`font-bold text-3xl ${getColorIMC(m.imc)}`}>{m.imc}</p>
                     </div>
-                  </div>
 
-                  {m.notas && (
-                    <div className="mt-4 pt-4 border-t border-gray-800/50">
-                      <div className="flex items-start gap-3">
-                        <div className="p-1.5 bg-gray-800 rounded-lg mt-1">
-                          <span className="text-gray-400 text-sm">📝</span>
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-xs text-gray-400 mb-2">Observaciones del entrenador:</p>
-                          <p className="text-sm text-gray-300 leading-relaxed">{m.notas}</p>
+                    {m.notas && (
+                      <div className="mt-4 pt-4 border-t border-gray-800/50">
+                        <div className="flex items-start gap-3">
+                          <div className="p-1.5 bg-gray-800 rounded-lg mt-1">
+                            <span className="text-gray-400 text-sm">📝</span>
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-xs text-gray-400 mb-2">Observaciones del entrenador:</p>
+                            <p className="text-sm text-gray-300 leading-relaxed">{m.notas}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              ))}
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

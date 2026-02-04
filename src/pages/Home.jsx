@@ -1,17 +1,25 @@
 // src/components/pages/Home.jsx
-import React, { useRef, useEffect } from "react";
-import { initAllAnimations } from "../animations/gymAnimations";
+import React, { useRef, useEffect, useState } from "react";
+import {
+  initAllAnimations,
+  initPlanesAnimations,
+} from "../animations/gymAnimations";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import api from "../api/axios";
+import { useAuth } from "../context/AuthContext";
+import LoginModal from "../modals/LoginModal";
+import { usePlan } from "../context/PlanContext";
+
 // Importa todos los datos
 import {
   heroData,
   statsData,
   serviciosData,
   horariosData,
-  planesData,
   contactoData,
   footerData,
 } from "../data/gymData";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   // Referencias para todas las secciones
@@ -40,6 +48,12 @@ const Home = () => {
   const ubicacionTitleRef = useRef();
   const ubicacionLeftRef = useRef();
   const ubicacionRightRef = useRef();
+
+  const [planes, setPlanes] = useState([]);
+  const { user } = useAuth();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const { selectPlan } = usePlan();
+  const navigate = useNavigate();
 
   // Inicializar animaciones cuando el componente se monta
   useEffect(() => {
@@ -75,6 +89,91 @@ const Home = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchPlanes = async () => {
+      try {
+        const { data } = await api.get("/planes?estado=true");
+
+        const planesAdaptados = data.map((plan, index) => ({
+          planReal: plan,
+          title: plan.nombre_plan,
+          priceLabel: `$${plan.precio.toLocaleString("es-CO")}`,
+          period: "/ mes",
+          subtitle: plan.descripcion,
+          tag: index === 1 ? "RECOMENDADO" : "PLAN",
+          isPopular: index === 1,
+          buttonText: "Elegir plan",
+          features: generarFeatures(plan.nombre_plan),
+        }));
+
+        setPlanes(planesAdaptados);
+      } catch (error) {
+        console.error("Error cargando planes", error);
+      }
+    };
+
+    fetchPlanes();
+  }, []);
+
+  useEffect(() => {
+    if (planes.length === 0) return;
+
+    // Esperar a que React pinte el DOM
+    requestAnimationFrame(() => {
+      initPlanesAnimations({
+        planesSectionRef,
+        planesTitleRef,
+        planesCardsRef,
+      });
+    });
+  }, [planes]);
+
+  const generarFeatures = (nombre) => {
+    switch (nombre.toLowerCase()) {
+      case "básico mensual":
+        return [
+          { text: "Acceso a pesas", included: true },
+          { text: "Acceso a cardio", included: true },
+          { text: "Clases grupales", included: false },
+          { text: "Entrenador personal", included: false },
+        ];
+
+      case "pro mensual":
+        return [
+          { text: "Acceso completo", included: true },
+          { text: "Clases grupales", included: true },
+          { text: "Zona funcional", included: true },
+          { text: "Entrenador personal", included: false },
+        ];
+
+      case "premium mensual":
+        return [
+          { text: "Acceso total", included: true },
+          { text: "Clases ilimitadas", included: true },
+          { text: "Entrenador personal", included: true },
+          { text: "Seguimiento mensual", included: true },
+        ];
+
+      default:
+        return [];
+    }
+  };
+
+  const handleElegirPlan = (planReal) => {
+    selectPlan(planReal);
+
+    if (!user) {
+      setShowLoginModal(true);
+      return;
+    }
+
+    // 🔒 MÁS ADELANTE:
+    // aquí irá:
+    // - seleccionar plan
+    // - ir a pago
+    navigate("/checkout");
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden">
       {/* HERO SECTION */}
@@ -104,7 +203,7 @@ const Home = () => {
               TRANSFORMA
             </span>{" "}
             <span className="title-word inline-block opacity-0">TU</span>{" "}
-            <span className="title-word inline-block opacity-0 bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+            <span className="title-word inline-block opacity-0 bg-gradient-to-r from-[#00f2ea] to-[#00d9ff] bg-clip-text text-transparent">
               CUERPO
             </span>
           </h1>
@@ -124,7 +223,7 @@ const Home = () => {
                 key={index}
                 className={`px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-4 rounded-lg font-bold transition duration-300 transform hover:scale-105 shadow-2xl opacity-0 text-sm sm:text-base ${
                   button.primary
-                    ? "bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600"
+                    ? "bg-gradient-to-r from-[#00f2ea] to-[#00d9ff] text-white hover:from-[#00e5f2] hover:to-[#00c4ff]"
                     : "border-2 border-white text-white hover:bg-white hover:text-gray-900"
                 }`}
               >
@@ -142,7 +241,7 @@ const Home = () => {
                 {/* Div para el número que va a incrementar */}
                 <div
                   ref={(el) => (statNumberRefs.current[index] = el)}
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-orange-400 mb-1 sm:mb-2"
+                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#00f2ea] mb-1 sm:mb-2"
                 >
                   0
                 </div>
@@ -166,7 +265,7 @@ const Home = () => {
             ref={serviciosTitleRef}
             className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 opacity-0 px-2"
           >
-            NUESTROS <span className="text-orange-400">SERVICIOS</span>
+            NUESTROS <span className="text-[#00f2ea]">SERVICIOS</span>
           </h2>
           <p className="text-center text-gray-400 text-sm sm:text-base mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto px-3">
             Ofrecemos todo lo que necesitas para alcanzar tus objetivos fitness
@@ -177,9 +276,9 @@ const Home = () => {
               <div
                 key={index}
                 ref={(el) => (serviciosCardsRef.current[index] = el)}
-                className="bg-gray-900/50 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border border-gray-700 hover:border-orange-500 transition-all duration-300 group opacity-0 mx-2 sm:mx-0"
+                className="bg-gray-900/50 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border border-gray-700 hover:border-[#00f2ea] transition-all duration-300 group opacity-0 mx-2 sm:mx-0"
               >
-                <div className="service-icon w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 transform group-hover:rotate-12 transition duration-300">
+                <div className="service-icon w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#00f2ea] to-[#00d9ff] rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 transform group-hover:rotate-12 transition duration-300">
                   <span className="text-2xl sm:text-3xl">{servicio.icon}</span>
                 </div>
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4">
@@ -216,7 +315,7 @@ const Home = () => {
             ref={horariosTitleRef}
             className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 opacity-0 px-2"
           >
-            <span className="text-orange-400">HORARIOS</span> DE APERTURA
+            <span className="text-[#00f2ea]">HORARIOS</span> DE APERTURA
           </h2>
           <p className="text-center text-gray-400 text-sm sm:text-base mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto px-3">
             Estamos abiertos para que entrenes cuando mejor te convenga
@@ -236,7 +335,7 @@ const Home = () => {
                     key={index}
                     className={`flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 px-4 sm:py-4 sm:px-5 md:py-5 md:px-6 rounded-lg sm:rounded-xl ${
                       horario.highlight
-                        ? "bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-orange-500/30"
+                        ? "bg-gradient-to-r from-[#00f2ea]/20 to-[#00d9ff]/20 border border-[#00f2ea]/30"
                         : "bg-gray-900/50"
                     }`}
                   >
@@ -248,7 +347,7 @@ const Home = () => {
                         {horario.hora}
                       </span>
                       {horario.highlight && (
-                        <div className="text-xs sm:text-sm text-orange-400 mt-1">
+                        <div className="text-xs sm:text-sm text-[#00f2ea] mt-1">
                           ¡Acceso completo!
                         </div>
                       )}
@@ -279,15 +378,15 @@ const Home = () => {
                         {clase.nivel}
                       </div>
                     </div>
-                    <span className="text-orange-400 font-semibold text-sm sm:text-base mt-1 sm:mt-0">
+                    <span className="text-[#00f2ea] font-semibold text-sm sm:text-base mt-1 sm:mt-0">
                       {clase.hora}
                     </span>
                   </div>
                 ))}
               </div>
-              <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-gradient-to-r from-red-500/10 to-orange-500/10 rounded-lg sm:rounded-xl border border-orange-500/20">
+              <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-gradient-to-r from-[#00f2ea]/10 to-[#00d9ff]/10 rounded-lg sm:rounded-xl border border-[#00f2ea]/20">
                 <p className="text-center text-gray-300 text-sm sm:text-base">
-                  <span className="font-bold text-orange-400">
+                  <span className="font-bold text-[#00f2ea]">
                     ¡Reserva tu lugar!
                   </span>{" "}
                   Las clases tienen cupo limitado
@@ -309,7 +408,7 @@ const Home = () => {
             ref={planesTitleRef}
             className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 opacity-0 px-2"
           >
-            ELEGÍ TU <span className="text-orange-400">PLAN</span>
+            ELEGÍ TU <span className="text-[#00f2ea]">PLAN</span>
           </h2>
           <p className="text-center text-gray-400 text-sm sm:text-base mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto px-3">
             Encuentra el plan perfecto para tus objetivos. Sin compromisos,
@@ -317,19 +416,19 @@ const Home = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
-            {planesData.map((plan, index) => (
+            {planes.map((plan, index) => (
               <div
                 key={index}
                 ref={(el) => (planesCardsRef.current[index] = el)}
                 className={`${
                   plan.isPopular
-                    ? "bg-gradient-to-b from-gray-900 to-black border-2 border-orange-500"
+                    ? "bg-gradient-to-b from-gray-900 to-black border-2 border-[#00f2ea]"
                     : "bg-gray-900/80 border border-gray-700"
                 } backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 transform hover:scale-105 transition duration-300 relative shadow-xl sm:shadow-2xl opacity-0`}
               >
                 {plan.isPopular && (
                   <div className="absolute -top-2 sm:-top-3 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 sm:px-4 sm:py-1 md:px-6 md:py-2 rounded-full font-bold text-xs sm:text-sm shadow-lg">
+                    <span className="bg-gradient-to-r from-[#00f2ea] to-[#00d9ff] text-white px-3 py-1 sm:px-4 sm:py-1 md:px-6 md:py-2 rounded-full font-bold text-xs sm:text-sm shadow-lg">
                       MÁS POPULAR
                     </span>
                   </div>
@@ -339,7 +438,7 @@ const Home = () => {
                   <div
                     className={`inline-block px-2 py-1 sm:px-3 sm:py-1 ${
                       plan.isPopular
-                        ? "bg-orange-500/20 text-orange-400"
+                        ? "bg-[#00f2ea]/20 text-[#00f2ea]"
                         : "bg-gray-800 text-gray-400"
                     } rounded-full text-xs sm:text-sm mb-3 sm:mb-4`}
                   >
@@ -349,7 +448,7 @@ const Home = () => {
                     {plan.title}
                   </h3>
                   <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-1 sm:mb-2">
-                    {plan.price}
+                    {plan.priceLabel}
                     <span className="text-sm sm:text-lg text-gray-400">
                       {plan.period}
                     </span>
@@ -357,7 +456,7 @@ const Home = () => {
                   <div
                     className={
                       plan.isPopular
-                        ? "text-orange-400 text-sm sm:text-base"
+                        ? "text-[#00f2ea] text-sm sm:text-base"
                         : "text-gray-400 text-sm sm:text-base"
                     }
                   >
@@ -387,9 +486,10 @@ const Home = () => {
                 </ul>
 
                 <button
+                  onClick={() => handleElegirPlan(plan.planReal)}
                   className={`w-full py-3 sm:py-4 ${
                     plan.isPopular
-                      ? "bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold hover:from-red-600 hover:to-orange-600"
+                      ? "bg-gradient-to-r from-[#00f2ea] to-[#00d9ff] text-white font-bold hover:from-[#00e5f2] hover:to-[#00c4ff]"
                       : "bg-gray-700 text-white font-semibold hover:bg-gray-600"
                   } rounded-lg sm:rounded-xl transition duration-300 shadow-lg text-sm sm:text-base`}
                 >
@@ -412,7 +512,7 @@ const Home = () => {
             ref={ubicacionTitleRef}
             className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 opacity-0 px-2"
           >
-            <span className="text-orange-400">VISÍTANOS</span>
+            <span className="text-[#00f2ea]">VISÍTANOS</span>
           </h2>
           <p className="text-center text-gray-400 text-sm sm:text-base mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto px-3">
             Encuéntranos en la mejor ubicación de la ciudad
@@ -427,7 +527,7 @@ const Home = () => {
                 <div className="space-y-6 sm:space-y-8">
                   {contactoData.map((item, idx) => (
                     <div key={idx} className="flex items-start">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg sm:rounded-xl flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#00f2ea] to-[#00d9ff] rounded-lg sm:rounded-xl flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
                         <span className="text-lg sm:text-xl">{item.icon}</span>
                       </div>
                       <div>
@@ -474,7 +574,7 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8">
             <div>
               <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-[#00f2ea] to-[#00d9ff] rounded-full flex items-center justify-center">
                   <span className="font-bold text-lg sm:text-xl">G</span>
                 </div>
                 <span className="text-xl sm:text-2xl font-bold">
@@ -489,7 +589,7 @@ const Home = () => {
                   <a
                     key={social}
                     href="#"
-                    className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-500 transition duration-300"
+                    className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#00f2ea] transition duration-300"
                   >
                     <span className="text-base sm:text-lg">
                       {social === "instagram"
@@ -515,7 +615,7 @@ const Home = () => {
                     <li key={linkIdx}>
                       <a
                         href="#"
-                        className="text-gray-400 hover:text-orange-400 transition duration-300 text-sm sm:text-base"
+                        className="text-gray-400 hover:text-[#00f2ea] transition duration-300 text-sm sm:text-base"
                       >
                         {link}
                       </a>
@@ -537,6 +637,11 @@ const Home = () => {
           </div>
         </div>
       </footer>
+
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+      />
     </div>
   );
 };

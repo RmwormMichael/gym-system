@@ -1,8 +1,8 @@
 /* components/modals/login.css */
 .glitch-form-wrapper {
   --bg-color: #0d0d0d;
-  --primary-color: #fb923c; /* Naranja más claro */
-  --secondary-color: #f87171; /* Rojo más claro para combinar */
+  --primary-color: #00f2ea; /* Cambiado a nuevo color */
+  --secondary-color: #00b3ff; /* Azul para combinar con #00f2ea */
   --text-color: #e5e5e5;
   --font-family: "Fira Code", Consolas, "Courier New", Courier, monospace;
   --glitch-anim-duration: 0.5s;
@@ -21,9 +21,9 @@
   background-color: var(--bg-color);
   width: 100%;
   max-width: 380px;
-  border: 1px solid rgba(251, 146, 60, 0.3); /* Actualizado */
+  border: 1px solid rgba(0, 242, 234, 0.3); /* Actualizado */
   box-shadow:
-    0 0 30px rgba(251, 146, 60, 0.2), /* Actualizado */
+    0 0 30px rgba(0, 242, 234, 0.2), /* Actualizado */
     inset 0 0 10px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   border-radius: 8px;
@@ -33,9 +33,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, rgba(248, 113, 113, 0.1) 0%, rgba(251, 146, 60, 0.1) 100%); /* Actualizado */
+  background: linear-gradient(90deg, rgba(0, 179, 255, 0.1) 0%, rgba(0, 242, 234, 0.1) 100%); /* Actualizado */
   padding: 1em 1.5em;
-  border-bottom: 1px solid rgba(251, 146, 60, 0.3); /* Actualizado */
+  border-bottom: 1px solid rgba(0, 242, 234, 0.3); /* Actualizado */
 }
 
 .card-title {
@@ -63,7 +63,7 @@
   width: 32px;
   height: 32px;
   background: rgba(15, 15, 15, 0.9);
-  border: 1px solid rgba(251, 146, 60, 0.4); /* Actualizado */
+  border: 1px solid rgba(0, 242, 234, 0.4); /* Actualizado */
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -75,11 +75,11 @@
 }
 
 .close-btn:hover {
-  background: rgba(251, 146, 60, 0.1); /* Actualizado */
+  background: rgba(0, 242, 234, 0.1); /* Actualizado */
   border-color: var(--primary-color);
   box-shadow: 
-    0 0 15px rgba(251, 146, 60, 0.4), /* Actualizado */
-    inset 0 0 10px rgba(251, 146, 60, 0.1); /* Actualizado */
+    0 0 15px rgba(0, 242, 234, 0.4), /* Actualizado */
+    inset 0 0 10px rgba(0, 242, 234, 0.1); /* Actualizado */
   transform: scale(1.05);
 }
 
@@ -124,7 +124,7 @@
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 2px solid rgba(251, 146, 60, 0.3); /* Actualizado */
+  border-bottom: 2px solid rgba(0, 242, 234, 0.3); /* Actualizado */
   padding: 0.75em 0;
   font-size: 1rem;
   color: var(--text-color);

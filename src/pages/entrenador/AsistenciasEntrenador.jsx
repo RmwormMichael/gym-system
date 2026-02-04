@@ -90,11 +90,11 @@ const AsistenciasEntrenador = () => {
         {/* Header */}
         <div className="glass-effect rounded-2xl p-5 mb-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+            <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
               <span className="text-2xl">🏋️‍♂️</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] bg-clip-text text-transparent">
                 Control de Asistencias
               </h1>
               <p className="text-gray-400 text-sm">
@@ -109,7 +109,7 @@ const AsistenciasEntrenador = () => {
               Seleccionar usuario
             </label>
             <select
-              className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+              className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
               value={usuarioSeleccionado}
               onChange={(e) => {
                 setUsuarioSeleccionado(e.target.value);
@@ -152,10 +152,10 @@ const AsistenciasEntrenador = () => {
           {ultimaAsistencia && (
             <div className="bg-gradient-to-br from-gray-900/80 to-black/50 p-4 rounded-xl border border-gray-700/50 mb-6">
               <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 bg-orange-500/20 rounded-lg">
-                  <span className="text-orange-400">📅</span>
+                <div className="p-1.5 bg-[#00f2ea]/20 rounded-lg">
+                  <span className="text-[#00f2ea]">📅</span>
                 </div>
-                <h3 className="font-bold text-orange-400">Última asistencia</h3>
+                <h3 className="font-bold text-[#00f2ea]">Última asistencia</h3>
               </div>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center py-2 border-b border-gray-800/50">

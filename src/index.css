@@ -38,12 +38,12 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #f97316, #ea580c);
+  background: linear-gradient(to bottom, #00f2ea, #00d9ff);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #fb923c, #f97316);
+  background: linear-gradient(to bottom, #00f2ea, #00d9ff);
 }
 
 /* Animaciones */

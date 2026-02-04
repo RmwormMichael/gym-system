@@ -93,7 +93,7 @@ const MisContactos = () => {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-orange-500 mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#00f2ea] mb-4"></div>
           <p className="text-gray-400">Cargando contactos...</p>
         </div>
       </div>
@@ -106,11 +106,11 @@ const MisContactos = () => {
         {/* Header */}
         <div className="glass-effect rounded-2xl p-5 mb-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+            <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
               <span className="text-2xl">👨‍👩‍👧‍👦</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] bg-clip-text text-transparent">
                 Mis Contactos Familiares
               </h1>
               <p className="text-gray-400 text-sm">
@@ -140,7 +140,7 @@ const MisContactos = () => {
                 <input
                   ref={(el) => (inputsRef.current[0] = el)}
                   placeholder="Ej: María González"
-                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
                   value={form.nombre}
                   onChange={(e) => setForm({ ...form, nombre: e.target.value })}
                   required
@@ -154,7 +154,7 @@ const MisContactos = () => {
                 <input
                   ref={(el) => (inputsRef.current[1] = el)}
                   placeholder="Ej: 3001234567"
-                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
                   value={form.telefono}
                   onChange={(e) => setForm({ ...form, telefono: e.target.value })}
                   required
@@ -167,7 +167,7 @@ const MisContactos = () => {
                 </label>
                 <select
                   ref={(el) => (inputsRef.current[2] = el)}
-                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 appearance-none"
+                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 appearance-none"
                   value={form.parentesco}
                   onChange={(e) => setForm({ ...form, parentesco: e.target.value })}
                   required
@@ -190,7 +190,7 @@ const MisContactos = () => {
             <button
               ref={buttonRef}
               type="submit"
-              className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-orange-500/25 transform hover:scale-[1.02]"
+              className="w-full bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] hover:from-[#00d8d0] hover:to-[#0099cc] text-white font-bold py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-[#00f2ea]/25 transform hover:scale-[1.02]"
             >
               Guardar Contacto
             </button>
@@ -214,7 +214,7 @@ const MisContactos = () => {
               </div>
             </div>
             {contactos.length > 0 && (
-              <div className="px-3 py-1 bg-blue-900/40 text-blue-300 rounded-full text-sm font-semibold">
+              <div className="px-3 py-1 bg-[#00b3ff]/20 text-[#00f2ea] rounded-full text-sm font-semibold">
                 {contactos.length} {contactos.length === 1 ? 'contacto' : 'contactos'}
               </div>
             )}
@@ -234,7 +234,7 @@ const MisContactos = () => {
                 <div
                   key={c._id}
                   ref={(el) => (cardsRef.current[index] = el)}
-                  className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-5 rounded-xl border border-gray-700/50 hover:border-orange-500/30 transition-all duration-300 hover:scale-[1.02]"
+                  className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-5 rounded-xl border border-gray-700/50 hover:border-[#00f2ea]/30 transition-all duration-300 hover:scale-[1.02]"
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-xl">
@@ -246,7 +246,7 @@ const MisContactos = () => {
                     <div className="flex-1">
                       <div className="flex items-start justify-between mb-2">
                         <div>
-                          <h3 className="font-bold text-lg text-white group-hover:text-orange-300 transition-colors">
+                          <h3 className="font-bold text-lg text-white group-hover:text-[#00f2ea] transition-colors">
                             {c.nombre}
                           </h3>
                           <div className="flex items-center gap-2 mt-1">

@@ -87,7 +87,7 @@ const AdminPlanes = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] bg-clip-text text-transparent">
             Gestión de Planes
           </h1>
           <p className="text-gray-400 text-sm mt-1">
@@ -101,11 +101,11 @@ const AdminPlanes = () => {
         <div className="space-y-6">
           <div ref={formRef} className="glass-effect rounded-2xl p-5">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+              <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
                 <span className="text-2xl">✨</span>
               </div>
               <div>
-                <h2 className="text-xl font-bold text-orange-400">
+                <h2 className="text-xl font-bold text-[#00f2ea]">
                   Nuevo Plan
                 </h2>
                 <p className="text-gray-400 text-sm">Crea un plan de suscripción</p>
@@ -122,7 +122,7 @@ const AdminPlanes = () => {
                   placeholder="Ej: Plan Premium, Plan Básico..."
                   value={form.nombre_plan}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
                   required
                 />
               </div>
@@ -138,7 +138,7 @@ const AdminPlanes = () => {
                     placeholder="Ej: 30, 90..."
                     value={form.duracion_dias}
                     onChange={handleChange}
-                    className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+                    className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
                     min="1"
                     required
                   />
@@ -154,7 +154,7 @@ const AdminPlanes = () => {
                     placeholder="Ej: 50000, 120000..."
                     value={form.precio}
                     onChange={handleChange}
-                    className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+                    className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
                     min="0"
                     step="1000"
                     required
@@ -171,14 +171,14 @@ const AdminPlanes = () => {
                   placeholder="Describe los beneficios y características del plan..."
                   value={form.descripcion}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 resize-none"
+                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 resize-none"
                   rows="3"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-orange-500/25 transform hover:scale-[1.02]"
+                className="w-full bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] hover:from-[#00e0ff] hover:to-[#0099ff] text-white font-bold py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-[#00f2ea]/25 transform hover:scale-[1.02]"
               >
                 Crear Plan
               </button>
@@ -191,11 +191,11 @@ const AdminPlanes = () => {
           <div className="glass-effect rounded-2xl p-5 h-full">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+                <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
                   <span className="text-2xl">📋</span>
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-orange-400">
+                  <h2 className="text-xl font-bold text-[#00f2ea]">
                     Listado de Planes
                   </h2>
                   <p className="text-gray-400 text-sm">
@@ -207,7 +207,7 @@ const AdminPlanes = () => {
               {/* Filtro */}
               <div className="flex gap-3">
                 <select
-                  className="px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 text-sm"
+                  className="px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 text-sm"
                   value={filtroEstado}
                   onChange={(e) => setFiltroEstado(e.target.value)}
                 >
@@ -227,7 +227,7 @@ const AdminPlanes = () => {
 
             {loading ? (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-orange-500 mb-4"></div>
+                <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#00f2ea] mb-4"></div>
                 <p className="text-gray-400">Cargando planes...</p>
               </div>
             ) : planesFiltrados.length === 0 ? (
@@ -246,7 +246,7 @@ const AdminPlanes = () => {
                   <div
                     key={p._id}
                     ref={(el) => (cardsRef.current[index] = el)}
-                    className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-5 rounded-xl border border-gray-700/50 hover:border-orange-500/30 transition-all duration-300 hover:scale-[1.01]"
+                    className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-5 rounded-xl border border-gray-700/50 hover:border-[#00f2ea]/30 transition-all duration-300 hover:scale-[1.01]"
                   >
                     <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
                       <div className="flex-1">
@@ -265,7 +265,7 @@ const AdminPlanes = () => {
                             </span>
                           </div>
                           <div>
-                            <h3 className="font-bold text-xl text-white group-hover:text-orange-300 transition-colors">
+                            <h3 className="font-bold text-xl text-white group-hover:text-[#00f2ea] transition-colors">
                               {p.nombre_plan}
                             </h3>
                             <div className="flex items-center gap-3 mt-1">
@@ -347,7 +347,7 @@ const AdminPlanes = () => {
                               <div className="space-y-2">
                                 <div className="flex justify-between">
                                   <span className="text-sm text-gray-400">Precio por día:</span>
-                                  <span className="text-sm font-semibold text-orange-400">
+                                  <span className="text-sm font-semibold text-[#00f2ea]">
                                     ${Math.round(p.precio / p.duracion_dias).toLocaleString()}
                                   </span>
                                 </div>

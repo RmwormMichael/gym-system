@@ -45,7 +45,7 @@ const MisPlanes = () => {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-orange-500 mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#00f2ea] mb-4"></div>
           <p className="text-gray-400">Cargando información del plan...</p>
         </div>
       </div>
@@ -58,11 +58,11 @@ const MisPlanes = () => {
         <div className="max-w-2xl mx-auto">
           <div className="glass-effect rounded-2xl p-5 mb-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+              <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
                 <span className="text-2xl">📋</span>
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] bg-clip-text text-transparent">
                   Mi Plan
                 </h1>
                 <p className="text-gray-400 text-sm">
@@ -96,11 +96,11 @@ const MisPlanes = () => {
         {/* Header */}
         <div className="glass-effect rounded-2xl p-5 mb-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+            <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
               <span className="text-2xl">📋</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] bg-clip-text text-transparent">
                 Mi Plan
               </h1>
               <p className="text-gray-400 text-sm">
@@ -195,9 +195,9 @@ const MisPlanes = () => {
               { 
                 label: "Valor mensual", 
                 value: `$${Math.round(precioPorDia * 30).toLocaleString()}`, 
-                color: "text-orange-400", 
+                color: "text-[#00f2ea]", 
                 icon: "📈", 
-                bg: "from-orange-900/30 to-amber-900/10" 
+                bg: "from-[#00f2ea]/20 to-[#00b3ff]/10" 
               },
             ].map((stat, index) => (
               <div
@@ -229,7 +229,7 @@ const MisPlanes = () => {
             </div>
             <div className="h-3 bg-gray-800 rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-orange-500 to-orange-600 rounded-full transition-all duration-1000 ease-out"
+                className="h-full bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] rounded-full transition-all duration-1000 ease-out"
                 style={{ width: `${porcentajeProgreso}%` }}
               />
             </div>
@@ -293,10 +293,10 @@ const MisPlanes = () => {
         {/* Acciones del plan */}
         <div className="glass-effect rounded-2xl p-5">
           <div className="flex items-center gap-2 mb-4">
-            <div className="p-1.5 bg-orange-900/20 rounded-lg">
-              <span className="text-orange-400">⚡</span>
+            <div className="p-1.5 bg-[#00b3ff]/20 rounded-lg">
+              <span className="text-[#00f2ea]">⚡</span>
             </div>
-            <h3 className="font-bold text-orange-400">Acciones disponibles</h3>
+            <h3 className="font-bold text-[#00f2ea]">Acciones disponibles</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <button className="p-4 bg-gradient-to-r from-blue-900/30 to-cyan-900/20 hover:from-blue-800/40 hover:to-cyan-800/30 rounded-xl border border-gray-700/50 transition-all duration-300 hover:scale-105">

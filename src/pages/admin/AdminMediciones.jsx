@@ -21,6 +21,21 @@ const AdminMediciones = () => {
   const cardsRef = useRef([]);
   const formRef = useRef(null);
 
+  // Función para formatear IMC a 2 decimales
+  const formatIMC = (imc) => {
+    if (imc === null || imc === undefined || imc === "") return "0.00";
+    const num = parseFloat(imc);
+    if (isNaN(num)) return "0.00";
+    return num.toFixed(2);
+  };
+
+  // Función para obtener valor numérico del IMC
+  const getNumIMC = (imc) => {
+    if (imc === null || imc === undefined || imc === "") return 0;
+    const num = parseFloat(imc);
+    return isNaN(num) ? 0 : num;
+  };
+
   // Cargar todos los usuarios
   useEffect(() => {
     const cargarUsuarios = async () => {
@@ -107,23 +122,23 @@ const AdminMediciones = () => {
     return cumpleUsuario && cumpleFechaInicio && cumpleFechaFin;
   });
 
-  // Calcular estadísticas
+  // Calcular estadísticas - MODIFICADA
   const calcularEstadisticas = () => {
     if (medicionesFiltradas.length === 0) return null;
 
     const pesos = medicionesFiltradas.map(m => m.peso).filter(p => p);
     const alturas = medicionesFiltradas.map(m => m.altura).filter(a => a);
-    const imcs = medicionesFiltradas.map(m => parseFloat(m.imc)).filter(i => !isNaN(i));
+    const imcs = medicionesFiltradas.map(m => getNumIMC(m.imc)).filter(i => !isNaN(i));
 
-    const promedio = (arr) => arr.length > 0 ? (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(2) : 0;
-    const maximo = (arr) => arr.length > 0 ? Math.max(...arr).toFixed(2) : 0;
-    const minimo = (arr) => arr.length > 0 ? Math.min(...arr).toFixed(2) : 0;
+    const promedio = (arr) => arr.length > 0 ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
+    const maximo = (arr) => arr.length > 0 ? Math.max(...arr) : 0;
+    const minimo = (arr) => arr.length > 0 ? Math.min(...arr) : 0;
 
     return {
       total: medicionesFiltradas.length,
       promedioPeso: promedio(pesos),
       promedioAltura: promedio(alturas),
-      promedioIMC: promedio(imcs),
+      promedioIMC: promedio(imcs), // Aquí devolvemos el número, no string
       maxPeso: maximo(pesos),
       minPeso: minimo(pesos),
       maxIMC: maximo(imcs),
@@ -135,25 +150,31 @@ const AdminMediciones = () => {
 
   // Calcular clasificación IMC
   const getClasificacionIMC = (imc) => {
-    if (imc < 18.5) return "Bajo peso";
-    if (imc < 25) return "Normal";
-    if (imc < 30) return "Sobrepeso";
+    const numImc = getNumIMC(imc);
+    if (numImc === 0) return "Sin datos";
+    if (numImc < 18.5) return "Bajo peso";
+    if (numImc < 25) return "Normal";
+    if (numImc < 30) return "Sobrepeso";
     return "Obesidad";
   };
 
   // Obtener color según IMC
   const getColorIMC = (imc) => {
-    if (imc < 18.5) return "text-blue-400";
-    if (imc < 25) return "text-green-400";
-    if (imc < 30) return "text-yellow-400";
+    const numImc = getNumIMC(imc);
+    if (numImc === 0) return "text-gray-400";
+    if (numImc < 18.5) return "text-blue-400";
+    if (numImc < 25) return "text-green-400";
+    if (numImc < 30) return "text-yellow-400";
     return "text-red-400";
   };
 
   // Obtener bg color según IMC
   const getBgColorIMC = (imc) => {
-    if (imc < 18.5) return "bg-blue-900/20 border-blue-700/30";
-    if (imc < 25) return "bg-green-900/20 border-green-700/30";
-    if (imc < 30) return "bg-yellow-900/20 border-yellow-700/30";
+    const numImc = getNumIMC(imc);
+    if (numImc === 0) return "bg-gray-900/20 border-gray-700/30";
+    if (numImc < 18.5) return "bg-blue-900/20 border-blue-700/30";
+    if (numImc < 25) return "bg-green-900/20 border-green-700/30";
+    if (numImc < 30) return "bg-yellow-900/20 border-yellow-700/30";
     return "bg-red-900/20 border-red-700/30";
   };
 
@@ -162,7 +183,7 @@ const AdminMediciones = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] bg-clip-text text-transparent">
             Gestión de Mediciones
           </h1>
           <p className="text-gray-400 text-sm mt-1">
@@ -176,11 +197,11 @@ const AdminMediciones = () => {
         <div className="space-y-6">
           <div ref={formRef} className="glass-effect rounded-2xl p-5">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+              <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
                 <span className="text-2xl">📝</span>
               </div>
               <div>
-                <h2 className="text-xl font-bold text-orange-400">
+                <h2 className="text-xl font-bold text-[#00f2ea]">
                   Nueva Medición
                 </h2>
                 <p className="text-gray-400 text-sm">Registro manual</p>
@@ -193,7 +214,7 @@ const AdminMediciones = () => {
                   Seleccionar usuario
                 </label>
                 <select
-                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
                   value={usuarioId}
                   onChange={(e) => setUsuarioId(e.target.value)}
                   required
@@ -214,7 +235,7 @@ const AdminMediciones = () => {
                   </label>
                   <input
                     placeholder="Ej: 70.5"
-                    className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+                    className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
                     value={form.peso}
                     onChange={(e) => setForm({ ...form, peso: e.target.value })}
                     type="number"
@@ -230,7 +251,7 @@ const AdminMediciones = () => {
                   </label>
                   <input
                     placeholder="Ej: 175.0"
-                    className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+                    className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
                     value={form.altura}
                     onChange={(e) => setForm({ ...form, altura: e.target.value })}
                     type="number"
@@ -247,7 +268,7 @@ const AdminMediciones = () => {
                 </label>
                 <textarea
                   placeholder="Notas adicionales sobre la medición..."
-                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 resize-none"
+                  className="w-full p-3 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 resize-none"
                   value={form.notas}
                   onChange={(e) => setForm({ ...form, notas: e.target.value })}
                   rows="3"
@@ -256,7 +277,7 @@ const AdminMediciones = () => {
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-orange-500/25 transform hover:scale-[1.02]"
+                className="w-full bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] hover:from-[#00e0ff] hover:to-[#0099ff] text-white font-bold py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-[#00f2ea]/25 transform hover:scale-[1.02]"
               >
                 Guardar Medición
               </button>
@@ -280,10 +301,34 @@ const AdminMediciones = () => {
               
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { label: "Total mediciones", value: estadisticas.total, color: "text-orange-400", icon: "📈", bg: "from-orange-900/30 to-amber-900/10" },
-                  { label: "IMC Promedio", value: estadisticas.promedioIMC, color: "text-green-400", icon: "⚖️", bg: "from-green-900/30 to-emerald-900/10" },
-                  { label: "Peso Promedio", value: `${estadisticas.promedioPeso} kg`, color: "text-blue-400", icon: "🏋️", bg: "from-blue-900/30 to-cyan-900/10" },
-                  { label: "Altura Promedio", value: `${estadisticas.promedioAltura} cm`, color: "text-purple-400", icon: "📏", bg: "from-purple-900/30 to-violet-900/10" },
+                  { 
+                    label: "Total mediciones", 
+                    value: estadisticas.total, 
+                    color: "text-[#00f2ea]", 
+                    icon: "📈", 
+                    bg: "from-[#00f2ea]/20 to-[#00b3ff]/10" 
+                  },
+                  { 
+                    label: "IMC Promedio", 
+                    value: formatIMC(estadisticas.promedioIMC), // Solo formateamos aquí
+                    color: "text-green-400", 
+                    icon: "⚖️", 
+                    bg: "from-green-900/30 to-emerald-900/10" 
+                  },
+                  { 
+                    label: "Peso Promedio", 
+                    value: `${estadisticas.promedioPeso.toFixed(1)} kg`, 
+                    color: "text-blue-400", 
+                    icon: "🏋️", 
+                    bg: "from-blue-900/30 to-cyan-900/10" 
+                  },
+                  { 
+                    label: "Altura Promedio", 
+                    value: `${estadisticas.promedioAltura.toFixed(1)} cm`, 
+                    color: "text-purple-400", 
+                    icon: "📏", 
+                    bg: "from-purple-900/30 to-violet-900/10" 
+                  },
                 ].map((stat, index) => (
                   <div
                     key={stat.label}
@@ -309,11 +354,11 @@ const AdminMediciones = () => {
           <div className="glass-effect rounded-2xl p-5 h-full">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-lg">
+                <div className="p-2 bg-gradient-to-r from-[#00f2ea]/20 to-[#00b3ff]/20 rounded-lg">
                   <span className="text-2xl">📋</span>
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-orange-400">
+                  <h2 className="text-xl font-bold text-[#00f2ea]">
                     Historial de Mediciones
                   </h2>
                   <p className="text-gray-400 text-sm">
@@ -328,7 +373,7 @@ const AdminMediciones = () => {
                   <select
                     value={filtroUsuario}
                     onChange={(e) => setFiltroUsuario(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 text-sm appearance-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 text-sm appearance-none"
                   >
                     <option value="">Todos los usuarios</option>
                     {usuarios.map((u) => (
@@ -346,7 +391,7 @@ const AdminMediciones = () => {
                   <div className="relative flex-1">
                     <input
                       type="date"
-                      className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 text-sm"
+                      className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 text-sm"
                       value={filtroFechaInicio}
                       onChange={(e) => setFiltroFechaInicio(e.target.value)}
                       placeholder="Desde"
@@ -356,7 +401,7 @@ const AdminMediciones = () => {
                   <div className="relative flex-1">
                     <input
                       type="date"
-                      className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 text-sm"
+                      className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 text-sm"
                       value={filtroFechaFin}
                       onChange={(e) => setFiltroFechaFin(e.target.value)}
                       placeholder="Hasta"
@@ -379,7 +424,7 @@ const AdminMediciones = () => {
 
             {loading ? (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-orange-500 mb-4"></div>
+                <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#00f2ea] mb-4"></div>
                 <p className="text-gray-400">Cargando mediciones...</p>
               </div>
             ) : medicionesFiltradas.length === 0 ? (
@@ -390,96 +435,103 @@ const AdminMediciones = () => {
               </div>
             ) : (
               <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
-                {medicionesFiltradas.map((m, index) => (
-                  <div
-                    key={m._id}
-                    ref={(el) => (cardsRef.current[index] = el)}
-                    className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-5 rounded-xl border border-gray-700/50 hover:border-orange-500/30 transition-all duration-300 hover:scale-[1.01]"
-                  >
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-                      <div>
-                        <p className="font-bold text-lg text-white group-hover:text-orange-300 transition-colors">
-                          {m.usuario_id?.nombre || "Usuario eliminado"}
-                        </p>
-                        <p className="text-sm text-gray-400 mt-1">
-                          {m.usuario_id?.cedula || "N/A"} • 
-                          <span className="ml-2">
-                            {new Date(m.fecha).toLocaleDateString('es-ES', {
-                              weekday: 'short',
-                              day: 'numeric',
-                              month: 'short',
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            })}
-                          </span>
-                        </p>
-                      </div>
-                      
-                      <div className={`px-3 py-1.5 rounded-lg text-sm font-semibold ${getBgColorIMC(m.imc)} ${getColorIMC(m.imc)}`}>
-                        {getClasificacionIMC(m.imc)}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between p-3 bg-gray-900/30 rounded-lg">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 bg-blue-900/20 rounded-lg">
-                              <span className="text-blue-400">⚖️</span>
-                            </div>
-                            <div>
-                              <p className="text-xs text-gray-400">Peso</p>
-                              <p className="font-bold text-lg">{m.peso} kg</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center justify-between p-3 bg-gray-900/30 rounded-lg">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 bg-purple-900/20 rounded-lg">
-                              <span className="text-purple-400">📏</span>
-                            </div>
-                            <div>
-                              <p className="text-xs text-gray-400">Altura</p>
-                              <p className="font-bold text-lg">{m.altura} cm</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-center">
-                        <div className={`text-center p-4 rounded-xl ${getBgColorIMC(m.imc)} border-2 ${getColorIMC(m.imc).replace('text-', 'border-')}`}>
-                          <p className="text-3xl font-bold mb-1">{m.imc}</p>
-                          <p className={`text-sm font-semibold ${getColorIMC(m.imc)}`}>IMC</p>
-                          <p className={`text-xs mt-2 ${getColorIMC(m.imc)}`}>
-                            {getClasificacionIMC(m.imc)}
+                {medicionesFiltradas.map((m, index) => {
+                  const formattedIMC = formatIMC(m.imc);
+                  const colorIMC = getColorIMC(m.imc);
+                  const clasificacion = getClasificacionIMC(m.imc);
+                  const bgColorIMC = getBgColorIMC(m.imc);
+                  
+                  return (
+                    <div
+                      key={m._id}
+                      ref={(el) => (cardsRef.current[index] = el)}
+                      className="group bg-gradient-to-br from-gray-900/80 to-black/50 p-5 rounded-xl border border-gray-700/50 hover:border-[#00f2ea]/30 transition-all duration-300 hover:scale-[1.01]"
+                    >
+                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                        <div>
+                          <p className="font-bold text-lg text-white group-hover:text-[#00f2ea] transition-colors">
+                            {m.usuario_id?.nombre || "Usuario eliminado"}
+                          </p>
+                          <p className="text-sm text-gray-400 mt-1">
+                            {m.usuario_id?.cedula || "N/A"} • 
+                            <span className="ml-2">
+                              {new Date(m.fecha).toLocaleDateString('es-ES', {
+                                weekday: 'short',
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </span>
                           </p>
                         </div>
+                        
+                        <div className={`px-3 py-1.5 rounded-lg text-sm font-semibold ${bgColorIMC} ${colorIMC}`}>
+                          {clasificacion}
+                        </div>
                       </div>
 
-                      <div>
-                        <div className="h-full p-3 bg-gray-900/30 rounded-lg">
-                          <div className="flex items-start gap-3 mb-2">
-                            <div className="p-1.5 bg-gray-800 rounded-lg mt-1">
-                              <span className="text-gray-400 text-sm">📝</span>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between p-3 bg-gray-900/30 rounded-lg">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 bg-blue-900/20 rounded-lg">
+                                <span className="text-blue-400">⚖️</span>
+                              </div>
+                              <div>
+                                <p className="text-xs text-gray-400">Peso</p>
+                                <p className="font-bold text-lg">{m.peso} kg</p>
+                              </div>
                             </div>
-                            <div className="flex-1">
-                              <p className="text-xs text-gray-400 mb-2">Observaciones</p>
-                              <p className="text-sm text-gray-300 leading-relaxed">
-                                {m.notas || (
-                                  <span className="text-gray-500 italic">
-                                    Sin observaciones registradas
-                                  </span>
-                                )}
-                              </p>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-3 bg-gray-900/30 rounded-lg">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 bg-purple-900/20 rounded-lg">
+                                <span className="text-purple-400">📏</span>
+                              </div>
+                              <div>
+                                <p className="text-xs text-gray-400">Altura</p>
+                                <p className="font-bold text-lg">{m.altura} cm</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-center">
+                          <div className={`text-center p-4 rounded-xl ${bgColorIMC} border-2 ${colorIMC.replace('text-', 'border-')}`}>
+                            <p className="text-3xl font-bold mb-1">{formattedIMC}</p>
+                            <p className={`text-sm font-semibold ${colorIMC}`}>IMC</p>
+                            <p className={`text-xs mt-2 ${colorIMC}`}>
+                              {clasificacion}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="h-full p-3 bg-gray-900/30 rounded-lg">
+                            <div className="flex items-start gap-3 mb-2">
+                              <div className="p-1.5 bg-gray-800 rounded-lg mt-1">
+                                <span className="text-gray-400 text-sm">📝</span>
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-xs text-gray-400 mb-2">Observaciones</p>
+                                <p className="text-sm text-gray-300 leading-relaxed">
+                                  {m.notas || (
+                                    <span className="text-gray-500 italic">
+                                      Sin observaciones registradas
+                                    </span>
+                                  )}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

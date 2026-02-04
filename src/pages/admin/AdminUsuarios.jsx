@@ -67,7 +67,7 @@ const AdminUsuarios = () => {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-orange-500 mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#00f2ea] mb-4"></div>
           <p className="text-gray-400">Cargando usuarios...</p>
         </div>
       </div>
@@ -79,7 +79,7 @@ const AdminUsuarios = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f2ea] to-[#00b3ff] bg-clip-text text-transparent">
             Gestión de Usuarios
           </h1>
           <p className="text-gray-400 text-sm mt-1">
@@ -97,7 +97,7 @@ const AdminUsuarios = () => {
               <input
                 type="text"
                 placeholder="Buscar por nombre, cédula o correo..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200"
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
               />
@@ -110,7 +110,7 @@ const AdminUsuarios = () => {
           {/* Filtros */}
           <div className="flex flex-wrap gap-3">
             <select
-              className="px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 text-sm"
+              className="px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 text-sm"
               value={filtroEstado}
               onChange={(e) => setFiltroEstado(e.target.value)}
             >
@@ -120,7 +120,7 @@ const AdminUsuarios = () => {
             </select>
 
             <select
-              className="px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-all duration-200 text-sm"
+              className="px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 focus:border-[#00f2ea] focus:ring-1 focus:ring-[#00f2ea] focus:outline-none transition-all duration-200 text-sm"
               value={filtroRol}
               onChange={(e) => setFiltroRol(e.target.value)}
             >
@@ -168,7 +168,7 @@ const AdminUsuarios = () => {
               <div
                 key={u._id}
                 ref={(el) => (cardsRef.current[index] = el)}
-                className="group glass-effect rounded-2xl p-5 hover:border-orange-500/30 transition-all duration-300 hover:scale-[1.01]"
+                className="group glass-effect rounded-2xl p-5 hover:border-[#00f2ea]/30 transition-all duration-300 hover:scale-[1.01]"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                   {/* Información del usuario */}
@@ -189,7 +189,7 @@ const AdminUsuarios = () => {
                           </span>
                         </div>
                         <div>
-                          <h3 className="font-bold text-lg text-white group-hover:text-orange-300 transition-colors">
+                          <h3 className="font-bold text-lg text-white group-hover:text-[#00f2ea] transition-colors">
                             {u.nombre}
                           </h3>
                           <p className="text-sm text-gray-400">CC: {u.cedula}</p>
@@ -221,10 +221,10 @@ const AdminUsuarios = () => {
                   {/* Plan */}
                   <div>
                     <div className="flex items-center gap-2 mb-3">
-                      <div className="p-1.5 bg-orange-900/20 rounded-lg">
-                        <span className="text-orange-400">📋</span>
+                      <div className="p-1.5 bg-[#00f2ea]/20 rounded-lg">
+                        <span className="text-[#00f2ea]">📋</span>
                       </div>
-                      <h4 className="font-semibold text-orange-400">Plan</h4>
+                      <h4 className="font-semibold text-[#00f2ea]">Plan</h4>
                     </div>
                     
                     {plan ? (

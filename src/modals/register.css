@@ -1,8 +1,8 @@
 /* register.css */
 .glitch-form-wrapper {
   --bg-color: #0d0d0d;
-  --primary-color: #fb923c; /* Naranja más claro - cambiado de #f97316 */
-  --secondary-color: #f87171; /* Rojo más claro - cambiado de #ef4444 */
+  --primary-color: #00f2ea; /* Cambiado a nuevo color */
+  --secondary-color: #00b3ff; /* Azul para combinar con #00f2ea */
   --text-color: #e5e5e5;
   --font-family: "Fira Code", Consolas, "Courier New", Courier, monospace;
   --glitch-anim-duration: 0.5s;
@@ -21,9 +21,9 @@
   background-color: var(--bg-color);
   width: 100%;
   max-width: 420px;
-  border: 1px solid rgba(251, 146, 60, 0.4); /* Más claro y más visible */
+  border: 1px solid rgba(0, 242, 234, 0.4); /* Actualizado */
   box-shadow:
-    0 0 40px rgba(251, 146, 60, 0.3), /* Más brillo */
+    0 0 40px rgba(0, 242, 234, 0.3), /* Actualizado */
     inset 0 0 10px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   border-radius: 8px;
@@ -34,9 +34,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, rgba(248, 113, 113, 0.15) 0%, rgba(251, 146, 60, 0.15) 100%); /* Más claro */
+  background: linear-gradient(90deg, rgba(0, 179, 255, 0.15) 0%, rgba(0, 242, 234, 0.15) 100%); /* Actualizado */
   padding: 1em 1.5em;
-  border-bottom: 1px solid rgba(251, 146, 60, 0.4); /* Más claro */
+  border-bottom: 1px solid rgba(0, 242, 234, 0.4); /* Actualizado */
 }
 
 .card-title {
@@ -48,14 +48,14 @@
   display: flex;
   align-items: center;
   gap: 0.5em;
-  text-shadow: 0 0 10px rgba(251, 146, 60, 0.5); /* Efecto brillo */
+  text-shadow: 0 0 10px rgba(0, 242, 234, 0.5); /* Actualizado */
 }
 
 .card-title svg {
   width: 1.2em;
   height: 1.2em;
   stroke: var(--primary-color);
-  filter: drop-shadow(0 0 2px rgba(251, 146, 60, 0.7));
+  filter: drop-shadow(0 0 2px rgba(0, 242, 234, 0.7)); /* Actualizado */
 }
 
 .card-dots {
@@ -118,7 +118,7 @@
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 2px solid rgba(251, 146, 60, 0.4); /* Más claro */
+  border-bottom: 2px solid rgba(0, 242, 234, 0.4); /* Actualizado */
   padding: 0.75em 0;
   font-size: 1rem;
   color: var(--text-color);
@@ -137,7 +137,7 @@
   top: -1.2em;
   font-size: 0.8rem;
   opacity: 1;
-  text-shadow: 0 0 8px rgba(251, 146, 60, 0.5);
+  text-shadow: 0 0 8px rgba(0, 242, 234, 0.5); /* Actualizado */
 }
 
 .form-group input:focus + .form-label::before,
@@ -269,7 +269,7 @@
   width: 32px;
   height: 32px;
   background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(251, 146, 60, 0.3);
+  border: 1px solid rgba(0, 242, 234, 0.3); /* Actualizado */
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -280,9 +280,9 @@
 }
 
 .close-btn:hover {
-  background: rgba(251, 146, 60, 0.2);
+  background: rgba(0, 242, 234, 0.2); /* Actualizado */
   border-color: var(--primary-color);
-  box-shadow: 0 0 15px rgba(251, 146, 60, 0.4);
+  box-shadow: 0 0 15px rgba(0, 242, 234, 0.4); /* Actualizado */
   transform: rotate(90deg);
 }
 
@@ -295,7 +295,7 @@
 
 .close-btn:hover svg {
   stroke: white;
-  filter: drop-shadow(0 0 2px rgba(251, 146, 60, 0.8));
+  filter: drop-shadow(0 0 2px rgba(0, 242, 234, 0.8)); /* Actualizado */
 }
 
 /* Mejoras responsivas */
@@ -322,23 +322,23 @@
   }
 }
 
-/* Efecto de brillo para los textos naranja */
-.text-orange-400 {
+/* Efecto de brillo para los textos */
+.text-[#00f2ea] {
   color: var(--primary-color) !important;
 }
 
-.text-orange-400:hover {
-  color: #fdba74 !important; /* Naranja aún más claro al hover */
-  text-shadow: 0 0 8px rgba(251, 146, 60, 0.5);
+.text-[#00f2ea]:hover {
+  color: #33f9f2 !important; /* Color más claro al hover */
+  text-shadow: 0 0 8px rgba(0, 242, 234, 0.5); /* Actualizado */
 }
 
 /* Para el enlace de términos y condiciones */
-a.text-orange-400 {
+a.text-[#00f2ea] {
   position: relative;
   text-decoration: none;
 }
 
-a.text-orange-400::after {
+a.text-[#00f2ea]::after {
   content: '';
   position: absolute;
   bottom: -2px;
@@ -349,6 +349,6 @@ a.text-orange-400::after {
   transition: width 0.3s ease;
 }
 
-a.text-orange-400:hover::after {
+a.text-[#00f2ea]:hover::after {
   width: 100%;
 }
